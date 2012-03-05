@@ -81,5 +81,21 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 		
 		$this->assertTrue ( $html == $this->testObject->getHtml () );
 	}
+	
+	public function test__toString() {
+		$this->testObject->setTitle ( self::TEST_TITLE )->addBodyHtml ( self::TEST_TAG )->addLinkedCSS ( self::TEST_CSS_URI )->addLinkedScript ( self::TEST_SCRIPT_URI );
+		
+		$html = '';
+		$html .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+		$html .= '<html xmlns="http://www.w3.org/1999/xhtml">';
+		$html .= '<head>';
+		$html .= '<title>' . self::TEST_TITLE . '</title>';
+		$html .= '<meta http-equiv="content-type" content="text/html;charset=utf-8"/>';
+		$html .= '</head>';
+		$html .= '<body>' . self::TEST_TAG . '</body>';
+		$html .= '</html>';
+		
+		$this->assertTrue ( $html == ( string ) $this->testObject );
+	}
 }
 

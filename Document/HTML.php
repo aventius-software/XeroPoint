@@ -43,6 +43,15 @@ class XeroPoint_Document_HTML {
 	protected $title;
 	
 	/**
+	 * alias for getHtml()
+	 * 
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->getHtml ();
+	}
+	
+	/**
 	 * add string to the current html body
 	 * 
 	 * @param string $html
