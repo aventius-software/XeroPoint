@@ -61,7 +61,7 @@ abstract class XeroPoint_Resource_Abstract {
 		
 		// split class to get resource type
 		$classParts = explode ( '_', get_class ( $this ) );
-		$this->resourceType = array_pop ( $classParts );
+		$this->resourceType = $classParts [1] == 'Application' ? $classParts [3] : $classParts [2];
 	}
 	
 	/**
