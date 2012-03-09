@@ -112,7 +112,7 @@ abstract class XeroPoint_Resource_Abstract {
 	 * @param string $separator
 	 * @return XeroPoint_Resource_Abstract
 	 */
-	public function setSeparator($separator) {
+	protected function setSeparator($separator) {
 		$this->separator = $separator;
 		return $this;
 	}
