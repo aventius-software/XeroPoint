@@ -99,18 +99,21 @@ abstract class XeroPoint_Front_Abstract {
 	 * set the current application configuration
 	 * 
 	 * @param XeroPoint_Configuration_Abstract $configuration
-	 * @return void
+	 * @return XeroPoint_Front_Abstract
 	 */
 	public function setConfiguration(XeroPoint_Configuration_Abstract $configuration) {
 		$this->configuration = $configuration;
+		return $this;
 	}
 	
 	/**
 	 * set the current page parameter name to be used in URL's
 	 * 
 	 * @param string $parameterName
+	 * @return XeroPoint_Front_Abstract
 	 */
 	protected function setPageParameterName($parameterName) {
 		$this->pageParameterName = $parameterName;
+		return $this;
 	}
 }
