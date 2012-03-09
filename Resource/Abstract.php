@@ -106,17 +106,14 @@ abstract class XeroPoint_Resource_Abstract {
 		
 		// build any extra url parameters
 		if (count ( $this->urlParameters ) > 0) {
-			// start with the current URL parameter separator
-			$additionalURLParameters = $this->getSeparator ();
-			
 			// cycle through each additional parameter and append to the string
 			foreach ( $this->urlParameters as $parameter => $value ) {
-				$additionalURLParameters .= $parameter . '=' . $value;
+				$additionalURLParameters .= $this->separator . $parameter . '=' . $value;
 			}
 		}
 		
 		// if running on web server...
-		if (isset ( $_SERVER ['SERVER_NAME'] )) {
+		if (isset ( $_SERVER ['SERVER_NAME'] ) && ! $parametersOnly) {
 			// must have resource type specified
 			if ($this->resourceType && $this->resourceName) {
 				// work out the protocol and port
@@ -130,9 +127,24 @@ abstract class XeroPoint_Resource_Abstract {
 			} else {
 				throw new Exception ( 'resource URL can only be generated when a resource name and type have been set' );
 			}
+		} else {
+			// if parameters only and there are some parameters then remove the leading separator character(s)
+			if ($parametersOnly && $additionalURLParameters != '') {
+				$additionalURLParameters = substr ( $additionalURLParameters, strlen ( $this->separator ), strlen ( $additionalURLParameters ) - strlen ( $this->separator ) );
+			}
 		}
 		
 		return $requestURL . $additionalURLParameters;
+	}
+	
+	/**
+	 * reset the resources parameters
+	 * 
+	 * @return XeroPoint_Resource_Abstract
+	 */
+	public function resetParameters() {
+		$this->urlParameters = array ();
+		return $this;
 	}
 	
 	/**
