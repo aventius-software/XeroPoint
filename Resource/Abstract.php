@@ -30,7 +30,14 @@ abstract class XeroPoint_Resource_Abstract {
 	protected $resourceName;
 	
 	/**
-	 * URL separator
+	 * holds the resource type
+	 * 
+	 * @var string
+	 */
+	protected $resourceType;
+	
+	/**
+	 * URL separator by default is ampersand character
 	 * 
 	 * @var string
 	 */
@@ -49,7 +56,12 @@ abstract class XeroPoint_Resource_Abstract {
 	 * @param string $resourceName
 	 */
 	public function __construct($resourceName) {
+		// must always set resource name
 		$this->resourceName = $resourceName;
+		
+		// split class to get resource type
+		$classParts = explode ( '_', get_class ( $this ) );
+		$this->resourceType = array_pop ( $classParts );
 	}
 	
 	/**
@@ -100,6 +112,23 @@ abstract class XeroPoint_Resource_Abstract {
 			// cycle through each additional parameter and append to the string
 			foreach ( $this->urlParameters as $parameter => $value ) {
 				$additionalURLParameters .= $parameter . '=' . $value;
+			}
+		}
+		
+		// if running on web server...
+		if (isset ( $_SERVER ['SERVER_NAME'] )) {
+			// must have resource type specified
+			if ($this->resourceType && $this->resourceName) {
+				// work out the protocol and port
+				$protocol = strtolower ( $_SERVER ['HTTPS'] ) == 'on' ? 'https://' : 'http://';
+				$port = $_SERVER ['SERVER_PORT'] == '80' ? '' : ':' . $_SERVER ['SERVER_PORT'];
+				
+				// build request URL
+				$requestURL = $protocol . $_SERVER ['SERVER_NAME'] . $port . $_SERVER ['SCRIPT_NAME'] . 'index.php?';
+				$requestURL .= self::REQUEST_IDENTIFIER . '=' . $this->resourceName;
+				$requestURL .= $this->separator . self::REQUEST_TYPE . '=' . $this->resourceType;
+			} else {
+				throw new Exception ( 'resource URL can only be generated when a resource name and type have been set' );
 			}
 		}
 		
