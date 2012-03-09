@@ -48,9 +48,30 @@ class XeroPoint_Test_Resource_Ajax extends PHPUnit_Framework_TestCase {
 		// TODO Auto-generated constructor
 	}
 	
+	/**
+	 * tests output of the __toString method
+	 * 
+	 */
+	public function test__ToString() {
+		$this->testObject->addURLParameters ( $this->testURLParameters );
+		$this->assertTrue ( '&param=value' === ( string ) $this->testObject, 'failed to get correct URL from __toString method: ' . ( string ) $this->testObject );
+	}
+	
+	/**
+	 * tests that the URL parameters that are set by addURLParameters are correctly returned by getURL(true) method
+	 * 
+	 */
 	public function testAddURLParameters() {
 		$this->testObject->addURLParameters ( $this->testURLParameters );
 		$this->assertTrue ( '&param=value' === $this->testObject->getURL ( true ), 'failed to get correct URL parameters: ' . $this->testObject->getURL ( true ) );
+	}
+	
+	/**
+	 * tests that the resource name is returned correctly
+	 * 
+	 */
+	public function testGetResourceName() {
+		$this->assertTrue ( self::TEST_RESOURCE_NAME == $this->testObject->getResourceName (), 'failed to get correct resource name: ' . $this->testObject->getResourceName () );
 	}
 	
 	/**
