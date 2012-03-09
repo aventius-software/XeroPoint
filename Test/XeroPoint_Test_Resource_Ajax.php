@@ -63,7 +63,7 @@ class XeroPoint_Test_Resource_Ajax extends PHPUnit_Framework_TestCase {
 	 */
 	public function testAddURLParameters() {
 		$this->testObject->addURLParameters ( $this->testURLParameters );
-		$this->assertTrue ( '&param=value' === $this->testObject->getURL ( true ), 'failed to get correct URL parameters: ' . $this->testObject->getURL ( true ) );
+		$this->assertTrue ( 'param=value' === $this->testObject->getURL ( true ), 'failed to get correct URL parameters: ' . $this->testObject->getURL ( true ) );
 	}
 	
 	/**
@@ -93,7 +93,17 @@ class XeroPoint_Test_Resource_Ajax extends PHPUnit_Framework_TestCase {
 		$_SERVER ['HTTPS'] = 'off';
 		$_SERVER ['SCRIPT_NAME'] = '/';
 		
-		$this->assertTrue ( 'http://test/index.php?xpRequestIdentifier=' . self::TEST_RESOURCE_NAME . '&xpRequestType=Ajax' == $this->testObject->getURL (), 'incorrect URL: ' . $this->testObject->getURL () );
+		// this is URL format we want
+		$testURL = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_RESOURCE_NAME . '&xpRequestType=Ajax';
+		
+		// first check URL root is ok
+		$this->assertTrue ( $testURL == $this->testObject->getURL (), 'incorrect URL: ' . $this->testObject->getURL () );
+		
+		// add some parameters
+		$this->testObject->resetParameters ()->addURLParameters ( $this->testURLParameters );
+		
+		// now check again
+		$this->assertTrue ( $testURL . '&param=value' == $this->testObject->getURL (), 'incorrect URL and parameters: ' . $this->testObject->getURL () );
 	}
 }
 
