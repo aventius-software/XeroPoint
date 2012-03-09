@@ -70,17 +70,21 @@ abstract class XeroPoint_Configuration_Abstract {
 	 * note that 'localhost' is specified already by default
 	 * 
 	 * @param string $serverName
+	 * @return XeroPoint_Configuration_Abstract
 	 */
 	public function registerDevelopmentServer($serverName) {
 		$this->developmentServerList [$serverName] = true;
+		return $this;
 	}
 	
 	/**
 	 * register a server for production mode
 	 * 
 	 * @param string $serverName
+	 * @return XeroPoint_Configuration_Abstract
 	 */
 	public function registerProductionServer($serverName) {
 		$this->productionServerList [$serverName] = true;
+		return $this;
 	}
 }
