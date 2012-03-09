@@ -81,5 +81,19 @@ class XeroPoint_Test_Resource_Ajax extends PHPUnit_Framework_TestCase {
 	public function testGetSeparator() {
 		$this->assertTrue ( '&' == $this->testObject->getSeparator () );
 	}
+	
+	/**
+	 * tests that getURL method returns a correctly formatted URL
+	 * 
+	 */
+	public function testGetURL() {
+		// fake server name and port
+		$_SERVER ['SERVER_NAME'] = 'test';
+		$_SERVER ['SERVER_PORT'] = 80;
+		$_SERVER ['HTTPS'] = 'off';
+		$_SERVER ['SCRIPT_NAME'] = '/';
+		
+		$this->assertTrue ( 'http://test/index.php?xpRequestIdentifier=' . self::TEST_RESOURCE_NAME . '&xpRequestType=Ajax' == $this->testObject->getURL (), 'incorrect URL: ' . $this->testObject->getURL () );
+	}
 }
 
