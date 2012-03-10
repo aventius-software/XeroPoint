@@ -1,6 +1,6 @@
 <?php
 /**
- * XeroPoint Ajax resource class
+ * XeroPoint ajax resource class
  * 
  * @author Ben Riley <ben.riley@gmail.com>
  */
