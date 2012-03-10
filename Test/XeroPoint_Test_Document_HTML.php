@@ -52,13 +52,13 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testAddCSS() {
-		$this->testObject->addLinkedCSS ( self::TEST_CSS_URI );
-		$this->assertTrue ( self::TEST_CSS_URI == array_pop ( $this->testObject->getLinkedCSS () ) );
+		$this->testObject->addCSS ( self::TEST_CSS_URI );
+		$this->assertTrue ( self::TEST_CSS_URI == array_pop ( $this->testObject->getCSS () ) );
 	}
 	
 	public function testAddScript() {
-		$this->testObject->addLinkedScript ( self::TEST_SCRIPT_URI );
-		$this->assertTrue ( self::TEST_SCRIPT_URI == array_pop ( $this->testObject->getLinkedScripts () ) );
+		$this->testObject->addScript ( self::TEST_SCRIPT_URI );
+		$this->assertTrue ( self::TEST_SCRIPT_URI == array_pop ( $this->testObject->getScripts () ) );
 	}
 	
 	public function testSetTitle() {
@@ -67,7 +67,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testGetHtml() {
-		$this->testObject->setTitle ( self::TEST_TITLE )->addBodyHtml ( self::TEST_TAG )->addLinkedCSS ( self::TEST_CSS_URI )->addLinkedScript ( self::TEST_SCRIPT_URI );
+		$this->testObject->setTitle ( self::TEST_TITLE )->addBodyHtml ( self::TEST_TAG )->addCSS ( self::TEST_CSS_URI )->addScript ( self::TEST_SCRIPT_URI );
 		
 		$html = '';
 		$html .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
@@ -83,7 +83,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function test__toString() {
-		$this->testObject->setTitle ( self::TEST_TITLE )->addBodyHtml ( self::TEST_TAG )->addLinkedCSS ( self::TEST_CSS_URI )->addLinkedScript ( self::TEST_SCRIPT_URI );
+		$this->testObject->setTitle ( self::TEST_TITLE )->addBodyHtml ( self::TEST_TAG )->addCSS ( self::TEST_CSS_URI )->addScript ( self::TEST_SCRIPT_URI );
 		
 		$html = '';
 		$html .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
