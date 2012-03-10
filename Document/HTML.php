@@ -36,6 +36,13 @@ class XeroPoint_Document_HTML {
 	protected $linkedScripts = array ();
 	
 	/**
+	 * holds the resources for this document
+	 * 
+	 * @var array
+	 */
+	protected $resources = array ();
+	
+	/**
 	 * holds the document title
 	 * 
 	 * @var string
@@ -68,8 +75,19 @@ class XeroPoint_Document_HTML {
 	 * @param string $cssURI
 	 * @return XeroPoint_Document_HTML
 	 */
-	public function addLinkedCSS($cssURI) {
+	public function addCSS($cssURI) {
 		$this->linkedCSS [] = $cssURI;
+		return $this;
+	}
+	
+	/**
+	 * add a XeroPoint resource to the document
+	 * 
+	 * @param XeroPoint_Resource_Abstract $resource
+	 * @return XeroPoint_Document_HTML
+	 */
+	public function addResource(XeroPoint_Resource_Abstract $resource) {
+		$this->resources [get_class ( $resource )] = $resource;
 		return $this;
 	}
 	
@@ -79,7 +97,7 @@ class XeroPoint_Document_HTML {
 	 * @param string $scriptURI
 	 * @return XeroPoint_Document_HTML
 	 */
-	public function addLinkedScript($scriptURI) {
+	public function addScript($scriptURI) {
 		$this->linkedScripts [] = $scriptURI;
 		return $this;
 	}
@@ -91,6 +109,15 @@ class XeroPoint_Document_HTML {
 	 */
 	public function getBodyHtml() {
 		return $this->body;
+	}
+	
+	/**
+	 * return the current list of linked CSS URI's
+	 * 
+	 * @return array
+	 */
+	public function getCSS() {
+		return $this->linkedCSS;
 	}
 	
 	/**
@@ -119,12 +146,12 @@ class XeroPoint_Document_HTML {
 	}
 	
 	/**
-	 * return the current list of linked CSS URI's
+	 * returns the current resources assigned to this document
 	 * 
 	 * @return array
 	 */
-	public function getLinkedCSS() {
-		return $this->linkedCSS;
+	public function getResources() {
+		return $this->resources;
 	}
 	
 	/**
@@ -132,7 +159,7 @@ class XeroPoint_Document_HTML {
 	 * 
 	 * @return array
 	 */
-	public function getLinkedScripts() {
+	public function getScripts() {
 		return $this->linkedScripts;
 	}
 	
