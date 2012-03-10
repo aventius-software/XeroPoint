@@ -28,7 +28,7 @@ class XeroPoint_Test_Resource_Style extends PHPUnit_Framework_TestCase {
 	 */
 	protected function setUp() {
 		parent::setUp ();
-		$this->testObject = new XeroPoint_Resource_Style_Test ( self::TEST_RESOURCE_NAME );
+		$this->testObject = new XeroPoint_Resource_Style ( self::TEST_RESOURCE_NAME );
 	}
 	
 	/**
@@ -57,11 +57,11 @@ class XeroPoint_Test_Resource_Style extends PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * tests that the URL parameter separator for Ajax URL strings is '&'
+	 * tests that the URL parameter separator for style URL strings is '&amp;'
 	 * 
 	 */
 	public function testGetSeparator() {
-		$this->assertTrue ( '&' == $this->testObject->getSeparator () );
+		$this->assertTrue ( '&amp;' == $this->testObject->getSeparator () );
 	}
 	
 	/**
@@ -76,7 +76,7 @@ class XeroPoint_Test_Resource_Style extends PHPUnit_Framework_TestCase {
 		$_SERVER ['SCRIPT_NAME'] = '/';
 		
 		// this is URL format we want
-		$testURL = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_RESOURCE_NAME . '&xpRequestType=Style';
+		$testURL = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_RESOURCE_NAME . '&amp;xpRequestType=Style';
 		
 		// first check URL root is ok
 		$this->assertTrue ( $testURL == $this->testObject->getURL (), 'incorrect URL: ' . $this->testObject->getURL () );
@@ -85,7 +85,7 @@ class XeroPoint_Test_Resource_Style extends PHPUnit_Framework_TestCase {
 		$this->testObject->resetParameters ()->addURLParameters ( $this->testURLParameters );
 		
 		// now check again
-		$this->assertTrue ( $testURL . '&param=value' == $this->testObject->getURL (), 'incorrect URL and parameters: ' . $this->testObject->getURL () );
+		$this->assertTrue ( $testURL . '&amp;param=value' == $this->testObject->getURL (), 'incorrect URL and parameters: ' . $this->testObject->getURL () );
 	}
 }
 
