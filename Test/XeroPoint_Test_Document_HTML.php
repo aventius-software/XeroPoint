@@ -8,10 +8,13 @@ class Document_HTML_Test_Class extends XeroPoint_Document_HTML {
 
 class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 	
-	const TEST_CSS_URI = 'http://testcss';
-	const TEST_SCRIPT_URI = 'http://testscript';
+	const TEST_CSS_RESOURCE_NAME = 'Test';
+	const TEST_CSS_URL = 'http://testcss';
+	const TEST_SCRIPT_RESOURCE_NAME = 'Test';
+	const TEST_SCRIPT_URL = 'http://testscript';
 	const TEST_TAG = '<div>test</div>';
 	const TEST_TITLE = 'test title';
+	const TEST_WORD_WRAP = 80;
 	
 	/**
 	 * test object
@@ -52,13 +55,68 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testAddCSS() {
-		$this->testObject->addCSS ( self::TEST_CSS_URI );
-		$this->assertTrue ( self::TEST_CSS_URI == array_pop ( $this->testObject->getCSS () ) );
+		$this->testObject->addCSS ( self::TEST_CSS_URL );
+		$this->assertTrue ( self::TEST_CSS_URL == array_pop ( $this->testObject->getCSS () ) );
+	}
+	
+	public function testAddResource() {
+		// add a CSS resource first
+		$this->testObject->addResource ( new XeroPoint_Resource_Style ( 'Test' ) );
+		
+		// fake server name and port
+		$_SERVER ['SERVER_NAME'] = 'test';
+		$_SERVER ['SERVER_PORT'] = 80;
+		$_SERVER ['HTTPS'] = 'off';
+		$_SERVER ['SCRIPT_NAME'] = '/';
+		
+		// this is URL format we want
+		$urlCSS = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_CSS_RESOURCE_NAME . '&amp;xpRequestType=Style';
+		
+		// build the html we are looking for in the response
+		$html = '';
+		$html .= '<title></title>';
+		$html .= '<meta http-equiv="content-type" content="text/html;charset=utf-8"/>';
+		$html .= '<link href="' . $urlCSS . '" type="text/css" rel="stylesheet"/>';
+		
+		// output for debugging purposes if anything goes wrong
+		echo "\n\n\n*** HEAD HTML WITH CSS AND SCRIPT RESOURCES ***";
+		echo "\n\nSHOULD BE:\n" . wordwrap ( $html, self::TEST_WORD_WRAP );
+		echo "\n\nACTUAL IS:\n" . wordwrap ( $this->testObject->getHeadHtml (), self::TEST_WORD_WRAP );
+		
+		// test...
+		$this->assertTrue ( $html == $this->testObject->getHeadHtml (), 'incorrect head html returned: ' . $this->testObject->getHeadHtml () );
+		
+		// now check script resources
+		$this->testObject->addResource ( new XeroPoint_Resource_Script ( 'Test' ) );
+		
+		// fake server name and port
+		$_SERVER ['SERVER_NAME'] = 'test';
+		$_SERVER ['SERVER_PORT'] = 80;
+		$_SERVER ['HTTPS'] = 'off';
+		$_SERVER ['SCRIPT_NAME'] = '/';
+		
+		// this is URL format we want
+		$urlScript = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_SCRIPT_RESOURCE_NAME . '&amp;xpRequestType=Script';
+		
+		// again build the html that the head method should return
+		$html = '';
+		$html .= '<title></title>';
+		$html .= '<meta http-equiv="content-type" content="text/html;charset=utf-8"/>';
+		$html .= '<link href="' . $urlCSS . '" type="text/css" rel="stylesheet"/>';
+		$html .= '<script href="' . $urlScript . '" type="text/javascript"/>';
+		
+		// output for debugging purposes
+		echo "\n\n\n*** HEAD HTML WITH CSS AND SCRIPT RESOURCES ***";
+		echo "\n\nSHOULD BE:\n" . wordwrap ( $html, self::TEST_WORD_WRAP );
+		echo "\n\nACTUAL IS:\n" . wordwrap ( $this->testObject->getHeadHtml (), self::TEST_WORD_WRAP );
+		
+		// and test again...
+		$this->assertTrue ( $html == $this->testObject->getHeadHtml (), 'incorrect head html returned' );
 	}
 	
 	public function testAddScript() {
-		$this->testObject->addScript ( self::TEST_SCRIPT_URI );
-		$this->assertTrue ( self::TEST_SCRIPT_URI == array_pop ( $this->testObject->getScripts () ) );
+		$this->testObject->addScript ( self::TEST_SCRIPT_URL );
+		$this->assertTrue ( self::TEST_SCRIPT_URL == array_pop ( $this->testObject->getScripts () ) );
 	}
 	
 	public function testSetTitle() {
@@ -67,7 +125,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testGetHtml() {
-		$this->testObject->setTitle ( self::TEST_TITLE )->addBodyHtml ( self::TEST_TAG )->addCSS ( self::TEST_CSS_URI )->addScript ( self::TEST_SCRIPT_URI );
+		$this->testObject->setTitle ( self::TEST_TITLE )->addBodyHtml ( self::TEST_TAG )->addCSS ( self::TEST_CSS_URL )->addScript ( self::TEST_SCRIPT_URL );
 		
 		$html = '';
 		$html .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
@@ -83,7 +141,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function test__toString() {
-		$this->testObject->setTitle ( self::TEST_TITLE )->addBodyHtml ( self::TEST_TAG )->addCSS ( self::TEST_CSS_URI )->addScript ( self::TEST_SCRIPT_URI );
+		$this->testObject->setTitle ( self::TEST_TITLE )->addBodyHtml ( self::TEST_TAG )->addCSS ( self::TEST_CSS_URL )->addScript ( self::TEST_SCRIPT_URL );
 		
 		$html = '';
 		$html .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
