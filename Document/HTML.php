@@ -72,11 +72,11 @@ class XeroPoint_Document_HTML {
 	/**
 	 * add a CSS link to the document
 	 * 
-	 * @param string $cssURI
+	 * @param string $url
 	 * @return XeroPoint_Document_HTML
 	 */
-	public function addCSS($cssURI) {
-		$this->linkedCSS [] = $cssURI;
+	public function addCSS($url) {
+		$this->linkedCSS [] = $url;
 		return $this;
 	}
 	
@@ -94,12 +94,35 @@ class XeroPoint_Document_HTML {
 	/**
 	 * add a script link to the document
 	 * 
-	 * @param string $scriptURI
+	 * @param string $url
 	 * @return XeroPoint_Document_HTML
 	 */
-	public function addScript($scriptURI) {
-		$this->linkedScripts [] = $scriptURI;
+	public function addScript($url) {
+		$this->linkedScripts [] = $url;
 		return $this;
+	}
+	
+	/**
+	 * helper method that returns a link tag for placing in the head
+	 * 
+	 * @param string $cssURI
+	 * @param string $type
+	 * @param string $rel
+	 * @return string
+	 */
+	protected function buildLinkTag($url, $type = 'text/css', $rel = 'stylesheet') {
+		return '<link href="' . $url . '" type="' . $type . '" rel="' . $rel . '"/>';
+	}
+	
+	/**
+	 * helper method that returns a script tag for placing in the head
+	 * 
+	 * @param string $url
+	 * @param string $type
+	 * @return string
+	 */
+	protected function buildScriptTag($url, $type = 'text/javascript') {
+		return '<script href="' . $url . '" type="' . $type . '"/>';
 	}
 	
 	/**
@@ -126,7 +149,19 @@ class XeroPoint_Document_HTML {
 	 * @return string
 	 */
 	public function getHeadHtml() {
-		return '<title>' . $this->title . '</title><meta http-equiv="content-type" content="text/html;charset=utf-8"/>' . implode ( '', $this->head );
+		// first build any resources that might be attached
+		$resources = '';
+		
+		foreach ( $this->resources as $resource ) {
+			/* @var $resource XeroPoint_Resource_Abstract */
+			if ($resource instanceof XeroPoint_Resource_Style) {
+				$resources .= $this->buildLinkTag ( $resource->getURL () );
+			} else if ($resource instanceof XeroPoint_Resource_Script) {
+				$resources .= $this->buildScriptTag ( $resource->getURL () );
+			}
+		}
+		
+		return '<title>' . $this->title . '</title><meta http-equiv="content-type" content="text/html;charset=utf-8"/>' . $resources . implode ( '', $this->head );
 	}
 	
 	/**
