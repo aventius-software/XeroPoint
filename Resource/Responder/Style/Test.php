@@ -6,7 +6,7 @@
 
 class XeroPoint_Resource_Responder_Style_Test extends XeroPoint_Resource_Responder_Style {
 	
-	protected function output() {
+	public function output() {
 		echo 'test CSS output';
 	}
 }
