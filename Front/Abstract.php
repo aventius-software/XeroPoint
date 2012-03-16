@@ -32,11 +32,44 @@ abstract class XeroPoint_Front_Abstract {
 	 * this method is called before main to capture any resource requests
 	 * note that the application is terminated if any request is found and processed
 	 * 
-	 * @TODO implement this!
+	 * optional parameter to return the resource object - if a resource was captured
+	 * 
+	 * @param bool $returnResourceObject
+	 * @return mixed
 	 */
-	public function catchResourceRequests() {
-		if (false) {
-			echo 'resource request captured';
+	public function catchResourceRequests($returnResourceObject = false) {
+		// get the request settings
+		$name = isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_IDENTIFIER] ) ? $_GET [XeroPoint_Resource_Abstract::REQUEST_IDENTIFIER] : null;
+		$type = isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_TYPE] ) ? $_GET [XeroPoint_Resource_Abstract::REQUEST_TYPE] : null;
+		$serverBased = ''; //isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_SERVER_BASED] ) ? '' : 'Application_';
+		$resource = null;
+		
+		// are the correct parameters set?
+		if (ctype_alpha ( $name ) && ctype_alpha ( $type )) {
+			// define the class
+			$class = 'XeroPoint_' . $serverBased . 'Resource_Responder_' . $type . '_' . $name;
+			
+			// try and call the class static method
+			if (in_array ( 'XeroPoint_Interface_Resource_Responder', class_implements ( $class, true ) )) {
+				// call the resource handler
+				try {
+					// call our handler
+					$resource = new $class ();
+					$resource->sendClientResponse ( true, true );
+				} catch ( Exception $e ) {
+					// output error
+					echo 'Resource request error, could not execute ZeroPoint resource handler (' . $class . ')';
+				}
+			} else {
+				// class does not exist
+				echo 'Handler for resource: ' . $name . ', cannot be not found, please check paths and that the resource handler exists on the server';
+			}
+		}
+		
+		// always exit after processing a resource - for good measure!
+		if ($returnResourceObject) {
+			return $resource;
+		} else {
 			exit ();
 		}
 	}
