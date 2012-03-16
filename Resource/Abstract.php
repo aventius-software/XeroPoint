@@ -16,6 +16,14 @@ abstract class XeroPoint_Resource_Abstract {
 	const REQUEST_IDENTIFIER = 'xpRequestIdentifier';
 	
 	/**
+	 * URL parameter to specify that the resource is 
+	 * XeroPoint based or local application based
+	 * 
+	 * @var string
+	 */
+	const REQUEST_MODE = 'xpRequestMode';
+	
+	/**
 	 * URL parameter to set the type of resource being requested
 	 * 
 	 * @var string
