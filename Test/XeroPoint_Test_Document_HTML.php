@@ -56,7 +56,8 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 	
 	public function testAddCSS() {
 		$this->testObject->addCSS ( self::TEST_CSS_URL );
-		$this->assertTrue ( self::TEST_CSS_URL == array_pop ( $this->testObject->getCSS () ) );
+		$css = $this->testObject->getCSS ();
+		$this->assertTrue ( self::TEST_CSS_URL == array_pop ( $css ) );
 	}
 	
 	public function testAddResource() {
@@ -116,7 +117,8 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 	
 	public function testAddScript() {
 		$this->testObject->addScript ( self::TEST_SCRIPT_URL );
-		$this->assertTrue ( self::TEST_SCRIPT_URL == array_pop ( $this->testObject->getScripts () ) );
+		$scripts = $this->testObject->getScripts ();
+		$this->assertTrue ( self::TEST_SCRIPT_URL == array_pop ( $scripts ) );
 	}
 	
 	public function testSetTitle() {
