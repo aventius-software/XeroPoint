@@ -30,7 +30,8 @@ abstract class XeroPoint_Configuration_Abstract {
 	 * @return string
 	 */
 	public function getMode() {
-		return array_pop ( explode ( '_', get_class ( $this ) ) );
+		$parts = explode ( '_', get_class ( $this ) );
+		return array_pop ( $parts );
 	}
 	
 	/**
