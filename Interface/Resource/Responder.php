@@ -16,8 +16,8 @@ interface XeroPoint_Interface_Resource_Responder {
 	public function sendClientResponse($useCaching = true, $useGZIP = true);
 	
 	/**
-	 * produce resource output
+	 * implement this method to produce resource output via buffer output (e.g. echo)
 	 * 
 	 */
-	abstract protected function output();
+	public function output();
 }
