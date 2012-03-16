@@ -14,8 +14,7 @@ abstract class XeroPoint_Resource_Responder_Style implements XeroPoint_Interface
 	 * @param bool $useGZIP
 	 */
 	public function sendClientResponse($useCaching = true, $useGZIP = true) {
-		// first start buffering as normal
-		ob_end_clean ();
+		// start buffer capture
 		ob_start ();
 		
 		// now output all code
@@ -58,14 +57,13 @@ abstract class XeroPoint_Resource_Responder_Style implements XeroPoint_Interface
 		
 		// send all to client
 		ob_flush ();
-		
-		// and just for good measure
-		exit ();
 	}
 	
 	/**
 	 * must implement this method to output your CSS
 	 * 
 	 */
-	abstract protected function output();
+	public function output() {
+		return;
+	}
 }
