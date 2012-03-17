@@ -39,9 +39,9 @@ abstract class XeroPoint_Front_Abstract {
 	 */
 	public function catchResourceRequests($returnResourceObject = false) {
 		// get the request settings
-		$name = isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_IDENTIFIER] ) ? $_GET [XeroPoint_Resource_Abstract::REQUEST_IDENTIFIER] : null;
-		$type = isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_TYPE] ) ? $_GET [XeroPoint_Resource_Abstract::REQUEST_TYPE] : null;
-		$serverBased = isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_MODE] ) ? '' : 'Application_';
+		$name = isset ( $_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_IDENTIFIER] ) ? $_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_IDENTIFIER] : null;
+		$type = isset ( $_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_TYPE] ) ? $_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_TYPE] : null;
+		$serverBased = isset ( $_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_MODE] ) ? '' : 'Application_';
 		$resource = null;
 		
 		// is there a resource request and if so are the correct parameters set?
