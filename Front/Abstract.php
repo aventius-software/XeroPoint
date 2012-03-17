@@ -44,7 +44,7 @@ abstract class XeroPoint_Front_Abstract {
 		$serverBased = ''; //isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_SERVER_BASED] ) ? '' : 'Application_';
 		$resource = null;
 		
-		// are the correct parameters set?
+		// is there a resource request and if so are the correct parameters set?
 		if (ctype_alpha ( $name ) && ctype_alpha ( $type )) {
 			// define the class
 			$class = 'XeroPoint_' . $serverBased . 'Resource_Responder_' . $type . '_' . $name;
@@ -64,13 +64,13 @@ abstract class XeroPoint_Front_Abstract {
 				// class does not exist
 				echo 'Handler for resource: ' . $name . ', cannot be not found, please check paths and that the resource handler exists on the server';
 			}
-		}
-		
-		// always exit after processing a resource - for good measure!
-		if ($returnResourceObject) {
-			return $resource;
-		} else {
-			exit ();
+			
+			// always exit after processing a resource - for good measure!
+			if ($returnResourceObject) {
+				return $resource;
+			} else {
+				exit ();
+			}
 		}
 	}
 	
