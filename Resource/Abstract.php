@@ -31,6 +31,13 @@ abstract class XeroPoint_Resource_Abstract {
 	const REQUEST_TYPE = 'xpRequestType';
 	
 	/**
+	 * defines if the resource is local application or XeroPoint based
+	 * 
+	 * @var bool
+	 */
+	protected $resourceLocalApplicationBased;
+	
+	/**
 	 * holds the resource name
 	 * 
 	 * @var string
@@ -67,9 +74,10 @@ abstract class XeroPoint_Resource_Abstract {
 		// must always set resource name
 		$this->resourceName = $resourceName;
 		
-		// split class to get resource type
+		// split class to get resource type and mode
 		$classParts = explode ( '_', get_class ( $this ) );
-		$this->resourceType = $classParts [1] == 'Application' ? $classParts [3] : $classParts [2];
+		$this->resourceLocalApplicationBased = $classParts [1] == 'Application';
+		$this->resourceType = $this->resourceLocalApplicationBased ? $classParts [3] : $classParts [2];
 	}
 	
 	/**
@@ -129,9 +137,14 @@ abstract class XeroPoint_Resource_Abstract {
 				$port = $_SERVER ['SERVER_PORT'] == '80' ? '' : ':' . $_SERVER ['SERVER_PORT'];
 				
 				// build request URL
-				$requestURL = $protocol . $_SERVER ['SERVER_NAME'] . $port . $_SERVER ['SCRIPT_NAME'] . 'index.php?';
+				$requestURL = $protocol . $_SERVER ['SERVER_NAME'] . $port . str_replace ( '?', '', str_replace ( 'index.php', '', $_SERVER ['SCRIPT_NAME'] ) ) . 'index.php?';
 				$requestURL .= self::REQUEST_IDENTIFIER . '=' . $this->resourceName;
 				$requestURL .= $this->separator . self::REQUEST_TYPE . '=' . $this->resourceType;
+				
+				// when not a local resource...
+				if (! $this->resourceLocalApplicationBased) {
+					$requestURL .= $this->separator . self::REQUEST_MODE . '=1';
+				}
 			} else {
 				throw new Exception ( 'resource URL can only be generated when a resource name and type have been set' );
 			}
