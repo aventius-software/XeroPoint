@@ -41,16 +41,16 @@ abstract class XeroPoint_Front_Abstract {
 		// get the request settings
 		$name = isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_IDENTIFIER] ) ? $_GET [XeroPoint_Resource_Abstract::REQUEST_IDENTIFIER] : null;
 		$type = isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_TYPE] ) ? $_GET [XeroPoint_Resource_Abstract::REQUEST_TYPE] : null;
-		$serverBased = ''; //isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_SERVER_BASED] ) ? '' : 'Application_';
+		$serverBased = isset ( $_GET [XeroPoint_Resource_Abstract::REQUEST_MODE] ) ? '' : 'Application_';
 		$resource = null;
 		
 		// is there a resource request and if so are the correct parameters set?
-		if (ctype_alpha ( $name ) && ctype_alpha ( $type )) {
+		if (ctype_alpha ( str_replace ( '_', '', $name ) ) && ctype_alpha ( $type )) {
 			// define the class
 			$class = 'XeroPoint_' . $serverBased . 'Resource_Responder_' . $type . '_' . $name;
 			
 			// try and call the class static method
-			if (in_array ( 'XeroPoint_Interface_Resource_Responder', class_implements ( $class, true ) )) {
+			if (in_array ( 'XeroPoint_Interface_Resource_Responder', class_implements ( $class ) )) {
 				// call the resource handler
 				try {
 					// call our handler
