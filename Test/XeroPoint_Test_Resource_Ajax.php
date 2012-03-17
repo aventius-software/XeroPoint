@@ -94,7 +94,7 @@ class XeroPoint_Test_Resource_Ajax extends PHPUnit_Framework_TestCase {
 		$_SERVER ['SCRIPT_NAME'] = '/';
 		
 		// this is URL format we want
-		$testURL = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_RESOURCE_NAME . '&xpRequestType=Ajax';
+		$testURL = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_RESOURCE_NAME . '&xpRequestType=Ajax&xpRequestMode=1';
 		
 		// first check URL root is ok
 		$this->assertTrue ( $testURL == $this->testObject->getURL (), 'incorrect URL: ' . $this->testObject->getURL () );

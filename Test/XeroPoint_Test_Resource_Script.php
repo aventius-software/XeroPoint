@@ -76,7 +76,7 @@ class XeroPoint_Test_Resource_Script extends PHPUnit_Framework_TestCase {
 		$_SERVER ['SCRIPT_NAME'] = '/';
 		
 		// this is URL format we want
-		$testURL = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_RESOURCE_NAME . '&amp;xpRequestType=Script';
+		$testURL = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_RESOURCE_NAME . '&amp;xpRequestType=Script&amp;xpRequestMode=1';
 		
 		// first check URL root is ok
 		$this->assertTrue ( $testURL == $this->testObject->getURL (), 'incorrect URL: ' . $this->testObject->getURL () );

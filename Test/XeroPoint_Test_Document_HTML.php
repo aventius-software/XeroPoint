@@ -71,7 +71,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 		$_SERVER ['SCRIPT_NAME'] = '/';
 		
 		// this is URL format we want
-		$urlCSS = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_CSS_RESOURCE_NAME . '&amp;xpRequestType=Style';
+		$urlCSS = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_CSS_RESOURCE_NAME . '&amp;xpRequestType=Style&amp;xpRequestMode=1';
 		
 		// build the html we are looking for in the response
 		$html = '';
@@ -97,7 +97,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 		$_SERVER ['SCRIPT_NAME'] = '/';
 		
 		// this is URL format we want
-		$urlScript = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_SCRIPT_RESOURCE_NAME . '&amp;xpRequestType=Script';
+		$urlScript = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_SCRIPT_RESOURCE_NAME . '&amp;xpRequestType=Script&amp;xpRequestMode=1';
 		
 		// again build the html that the head method should return
 		$html = '';
