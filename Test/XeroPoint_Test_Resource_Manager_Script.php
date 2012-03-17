@@ -2,14 +2,16 @@
 require_once 'PHPUnit\Framework\TestCase.php';
 require_once 'XeroPoint.php';
 
-class XeroPoint_Test_Resource_Script extends PHPUnit_Framework_TestCase {
-	
-	const TEST_RESOURCE_NAME = 'test_resource';
+class XeroPoint_Resource_Manager_Script_Unit_Test extends XeroPoint_Resource_Manager_Script_Abstract {
+
+}
+
+class XeroPoint_Test_Resource_Manager_Script extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * test object
 	 * 
-	 * @var XeroPoint_Resource_Script
+	 * @var XeroPoint_Resource_Manager_Script_Unit_Test
 	 */
 	private $testObject;
 	
@@ -28,7 +30,7 @@ class XeroPoint_Test_Resource_Script extends PHPUnit_Framework_TestCase {
 	 */
 	protected function setUp() {
 		parent::setUp ();
-		$this->testObject = new XeroPoint_Resource_Script ( self::TEST_RESOURCE_NAME );
+		$this->testObject = new XeroPoint_Resource_Manager_Script_Unit_Test ();
 	}
 	
 	/**
@@ -46,14 +48,6 @@ class XeroPoint_Test_Resource_Script extends PHPUnit_Framework_TestCase {
 	 */
 	public function __construct() {
 		// TODO Auto-generated constructor
-	}
-	
-	/**
-	 * tests that the resource name is returned correctly
-	 * 
-	 */
-	public function testGetResourceName() {
-		$this->assertTrue ( self::TEST_RESOURCE_NAME == $this->testObject->getResourceName (), 'failed to get correct resource name: ' . $this->testObject->getResourceName () );
 	}
 	
 	/**
@@ -76,7 +70,7 @@ class XeroPoint_Test_Resource_Script extends PHPUnit_Framework_TestCase {
 		$_SERVER ['SCRIPT_NAME'] = '/';
 		
 		// this is URL format we want
-		$testURL = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_RESOURCE_NAME . '&amp;xpRequestType=Script&amp;xpRequestMode=1';
+		$testURL = 'http://test/index.php?xpRequestIdentifier=Unit_Test&amp;xpRequestType=Script&amp;xpRequestMode=1';
 		
 		// first check URL root is ok
 		$this->assertTrue ( $testURL == $this->testObject->getURL (), 'incorrect URL: ' . $this->testObject->getURL () );
