@@ -2,6 +2,10 @@
 require_once 'PHPUnit\Framework\TestCase.php';
 require_once 'XeroPoint.php';
 
+class XeroPoint_Resource_Responder_Style_Unit_Test extends XeroPoint_Resource_Responder_Style_Abstract {
+
+}
+
 class Front_Configuration_Test_Class extends XeroPoint_Configuration_Abstract {
 
 }
@@ -87,15 +91,15 @@ class XeroPoint_Test_Front extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCatchResourceRequests() {
 		// first fake a resource request URL
-		$_GET [XeroPoint_Resource_Abstract::REQUEST_IDENTIFIER] = 'Test';
-		$_GET [XeroPoint_Resource_Abstract::REQUEST_MODE] = 'Server';
-		$_GET [XeroPoint_Resource_Abstract::REQUEST_TYPE] = 'Style';
+		$_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_IDENTIFIER] = 'Unit_Test';
+		$_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_MODE] = 'Server';
+		$_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_TYPE] = 'Style';
 		
 		// try and get the resource responder
 		$resource = $this->testObject->catchResourceRequests ( true );
 		
 		// if the request was captured correctly then we should have a responder object
-		$this->assertTrue ( $resource instanceof XeroPoint_Resource_Responder_Style );
+		$this->assertTrue ( $resource instanceof XeroPoint_Resource_Responder_Style_Abstract );
 	}
 	
 	/**
