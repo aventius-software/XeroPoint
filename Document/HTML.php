@@ -83,10 +83,10 @@ class XeroPoint_Document_HTML {
 	/**
 	 * add a XeroPoint resource to the document
 	 * 
-	 * @param XeroPoint_Resource_Abstract $resource
+	 * @param XeroPoint_Resource_Manager_Abstract $resource
 	 * @return XeroPoint_Document_HTML
 	 */
-	public function addResource(XeroPoint_Resource_Abstract $resource) {
+	public function addResource(XeroPoint_Resource_Manager_Abstract $resource) {
 		$this->resources [get_class ( $resource )] = $resource;
 		return $this;
 	}
@@ -154,9 +154,9 @@ class XeroPoint_Document_HTML {
 		
 		foreach ( $this->resources as $resource ) {
 			/* @var $resource XeroPoint_Resource_Abstract */
-			if ($resource instanceof XeroPoint_Resource_Style) {
+			if ($resource instanceof XeroPoint_Resource_Manager_Style_Abstract) {
 				$resources .= $this->buildLinkTag ( $resource->getURL () );
-			} else if ($resource instanceof XeroPoint_Resource_Script) {
+			} else if ($resource instanceof XeroPoint_Resource_Manager_Script_Abstract) {
 				$resources .= $this->buildScriptTag ( $resource->getURL () );
 			}
 		}
