@@ -158,6 +158,8 @@ class XeroPoint_Document_HTML {
 				$resources .= $this->buildLinkTag ( $resource->getURL () );
 			} else if ($resource instanceof XeroPoint_Resource_Manager_Script_Abstract) {
 				$resources .= $this->buildScriptTag ( $resource->getURL () );
+			} else {
+				throw new Exception ( 'invalid resource type of: ' . get_class ( $resource ) . ', has been added to document' );
 			}
 		}
 		
