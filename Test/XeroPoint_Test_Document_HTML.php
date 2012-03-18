@@ -2,6 +2,18 @@
 require_once 'PHPUnit\Framework\TestCase.php';
 require_once 'XeroPoint.php';
 
+if (! class_exists ( 'XeroPoint_Resource_Manager_Script_Unit_Test' )) {
+	class XeroPoint_Resource_Manager_Script_Unit_Test extends XeroPoint_Resource_Manager_Script_Abstract {
+	
+	}
+}
+
+if (! class_exists ( 'XeroPoint_Resource_Manager_Style_Unit_Test' )) {
+	class XeroPoint_Resource_Manager_Style_Unit_Test extends XeroPoint_Resource_Manager_Style_Abstract {
+	
+	}
+}
+
 class Document_HTML_Test_Class extends XeroPoint_Document_HTML {
 
 }
@@ -62,7 +74,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 	
 	public function testAddResource() {
 		// add a CSS resource first
-		$this->testObject->addResource ( new XeroPoint_Resource_Style ( 'Test' ) );
+		$this->testObject->addResource ( new XeroPoint_Resource_Manager_Style_Unit_Test () );
 		
 		// fake server name and port
 		$_SERVER ['SERVER_NAME'] = 'test';
@@ -71,7 +83,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 		$_SERVER ['SCRIPT_NAME'] = '/';
 		
 		// this is URL format we want
-		$urlCSS = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_CSS_RESOURCE_NAME . '&amp;xpRequestType=Style&amp;xpRequestMode=1';
+		$urlCSS = 'http://test/index.php?xpRequestIdentifier=Unit_Test&amp;xpRequestType=Style&amp;xpRequestMode=1';
 		
 		// build the html we are looking for in the response
 		$html = '';
@@ -80,7 +92,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 		$html .= '<link href="' . $urlCSS . '" type="text/css" rel="stylesheet"/>';
 		
 		// output for debugging purposes if anything goes wrong
-		echo "\n\n\n*** HEAD HTML WITH CSS AND SCRIPT RESOURCES ***";
+		echo "\n\n\n*** HEAD HTML WITH ONLY CSS RESOURCE ***";
 		echo "\n\nSHOULD BE:\n" . wordwrap ( $html, self::TEST_WORD_WRAP );
 		echo "\n\nACTUAL IS:\n" . wordwrap ( $this->testObject->getHeadHtml (), self::TEST_WORD_WRAP );
 		
@@ -88,7 +100,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 		$this->assertTrue ( $html == $this->testObject->getHeadHtml (), 'incorrect head html returned: ' . $this->testObject->getHeadHtml () );
 		
 		// now check script resources
-		$this->testObject->addResource ( new XeroPoint_Resource_Script ( 'Test' ) );
+		$this->testObject->addResource ( new XeroPoint_Resource_Manager_Script_Unit_Test () );
 		
 		// fake server name and port
 		$_SERVER ['SERVER_NAME'] = 'test';
@@ -97,7 +109,7 @@ class XeroPoint_Test_Document_HTML extends PHPUnit_Framework_TestCase {
 		$_SERVER ['SCRIPT_NAME'] = '/';
 		
 		// this is URL format we want
-		$urlScript = 'http://test/index.php?xpRequestIdentifier=' . self::TEST_SCRIPT_RESOURCE_NAME . '&amp;xpRequestType=Script&amp;xpRequestMode=1';
+		$urlScript = 'http://test/index.php?xpRequestIdentifier=Unit_Test&amp;xpRequestType=Script&amp;xpRequestMode=1';
 		
 		// again build the html that the head method should return
 		$html = '';
