@@ -1,1 +1,25 @@
-welcome to XeroPoint
+Welcome to XeroPoint (alpha) - DO NOT USE IN PRODUCTION!
+
+I'm pretty much doing this as a technical exercise but its an experimental PHP framework 
+based as much as possible on object orientated design ideas, its based on an existing 
+framework that I intially developed at home for use with a new website I'm working on but 
+which also I use with various work projects.
+
+I'm trying to get passed the use of 'free text' arrays for initialisation and settings such 
+as the form controls in the Zend Framework and instead create objects with clearly defined methods 
+that can be better managed and extended. Not to mention my pet hate of the fact that 'free text' 
+arrays can never be used with code completion or so called 'intellisense' functionality but 
+once you have an object - hey presto! That's another way to make things a little painless for 
+those of us with dreadfull memories! :-) 
+
+Anyway I'm trying to build this with other interesting features such as easy but powerful and 
+dynamic resource management - think content servers and scalability etc...
+
+Hope you enjoy
+Ben
+
+P.S. Love it or hate it (I love and hate it in equal measure!! :-) but this has been developed 
+using the Zend Studio IDE and with Zend Community Server. You'll probably notice some of the 
+ZS project files in this repo, I've left them in for others who use ZS as it should give all 
+the required settings (not that there's many) for almost instant 'fun' if you check this out 
+as a ZS project.
