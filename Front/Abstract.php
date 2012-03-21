@@ -49,16 +49,18 @@ abstract class XeroPoint_Front_Abstract {
 			// define the class
 			$class = 'XeroPoint_' . $serverBased . 'Resource_Responder_' . $type . '_' . $name;
 			
-			// try and call the class static method
-			if (in_array ( 'XeroPoint_Interface_Resource_Responder', class_implements ( $class ) )) {
+			// try and call the class method
+			if (in_array ( 'XeroPoint_Resource_Responder_Abstract', class_parents ( $class ) )) {
 				// call the resource handler
 				try {
-					// call our handler
+					// call our handler...
 					$resource = new $class ();
-					$resource->sendClientResponse ( true, true );
+					
+					/* @var $resource XeroPoint_Resource_Responder_Abstract */
+					$resource->sendResponse ();
 				} catch ( Exception $e ) {
 					// output error
-					echo 'Resource request error, could not execute ZeroPoint resource handler (' . $class . ')';
+					echo 'Resource request error, could not execute XeroPoint resource handler (' . $class . ')';
 				}
 			} else {
 				// class does not exist
@@ -107,7 +109,6 @@ abstract class XeroPoint_Front_Abstract {
 	 * running an application - note that this method is not called if 
 	 * a resource request is received
 	 * 
-	 * @return void
 	 */
 	abstract public function main();
 	
