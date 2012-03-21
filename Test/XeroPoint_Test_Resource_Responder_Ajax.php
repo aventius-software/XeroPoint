@@ -4,7 +4,12 @@ require_once 'XeroPoint.php';
 
 class XeroPoint_Resource_Responder_Ajax_Unit_Test extends XeroPoint_Resource_Responder_Ajax_Abstract {
 	
-	const TEST_MESSAGE = 'test response';
+	const TEST_MESSAGE = 'test ajax response';
+	
+	public function __construct() {
+		parent::__construct ();
+		$this->testing = true;
+	}
 	
 	public function buildResponse() {
 		echo self::TEST_MESSAGE;
@@ -19,15 +24,6 @@ class XeroPoint_Test_Resource_Responder_Ajax extends PHPUnit_Framework_TestCase 
 	 * @var XeroPoint_Resource_Responder_Ajax_Abstract
 	 */
 	private $testObject;
-	
-	/**
-	 * used to test URL parameters
-	 * 
-	 * @var array
-	 */
-	private $testURLParameters = array ( 
-		'param' => 'value' 
-	);
 	
 	/**
 	 * Prepares the environment before running a test.
@@ -78,7 +74,7 @@ class XeroPoint_Test_Resource_Responder_Ajax extends PHPUnit_Framework_TestCase 
 	 */
 	public function testSendResponse() {
 		// capture response - note the parameter of 'true' to indicate testing
-		$response = $this->testObject->sendResponse ( true );
+		$response = $this->testObject->sendResponse ();
 		
 		// output to debug
 		echo "\nSEND RESPONSE:\n$response\n";
