@@ -2,8 +2,11 @@
 require_once 'PHPUnit\Framework\TestCase.php';
 require_once 'XeroPoint.php';
 
-class XeroPoint_Resource_Responder_Style_Unit_Test extends XeroPoint_Resource_Responder_Style_Abstract {
-
+class XeroPoint_Resource_Responder_Style_FrontUnitTest extends XeroPoint_Resource_Responder_Style_Abstract {
+	
+	public function buildResponse() {
+		echo 'testing';
+	}
 }
 
 class Front_Configuration_Test_Class extends XeroPoint_Configuration_Abstract {
@@ -91,7 +94,7 @@ class XeroPoint_Test_Front extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCatchResourceRequests() {
 		// first fake a resource request URL
-		$_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_IDENTIFIER] = 'Unit_Test';
+		$_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_IDENTIFIER] = 'FrontUnitTest';
 		$_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_MODE] = 'Server';
 		$_GET [XeroPoint_Resource_Manager_Abstract::REQUEST_TYPE] = 'Style';
 		
