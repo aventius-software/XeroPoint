@@ -24,7 +24,9 @@ abstract class XeroPoint_Resource_Responder_Style_Abstract extends XeroPoint_Res
 		), $response );
 		
 		// remember to send the correct content type header! helps!
-		header ( 'Content-Type: text/css' );
+		if (! $this->testing) {
+			header ( 'Content-Type: text/css' );
+		}
 		
 		// return processed response
 		return $response;
