@@ -2,11 +2,15 @@ Welcome to XeroPoint (alpha) - DO NOT USE IN PRODUCTION!
 
 I'm pretty much doing this as a technical exercise but its an experimental PHP framework based as much as possible on object orientated design ideas, its based on an existing framework that I intially developed at home for use with a new website I'm working on but which also I use with various work projects.
 
-I'm trying to get passed the use of 'free text' arrays for initialisation and settings such as the form controls in the Zend Framework and instead create objects with clearly defined methods that can be better managed and extended. Not to mention my pet hate of the fact that 'free text' arrays can never be used with code completion or so called 'intellisense' functionality but once you have an object - hey presto! That's another way to make things a little painless for those of us with dreadfull memories! :-) 
+One thing amonst many for example is that I'm trying to get past the use of 'free text' arrays for initialisation and settings on objects, such as the form controls in the Zend Framework and instead create objects with clearly defined methods that can be better managed and extended. Not to mention my pet hate of the fact that 'free text' arrays can never be used with code completion or so called 'intellisense' functionality but once you have an object - hey presto! That's another way to make things a little painless for those of us with dreadfull memories! :-) 
 
 Anyway I'm trying to build this with other interesting features such as easy but powerful and dynamic resource management - think content servers and scalability etc...
+
+I'm currently refactoring lots of the old frameworks code into this new framework, so bit by bit this will grow. I'm trying to keep a TDD philosophy on this project, as best as possible - but I'm fighting myself sometimes!! ;-)
 
 Hope you enjoy
 Ben
 
-P.S. Love it or hate it (I love and hate it in equal measure!! :-) but this has been developed using the Zend Studio IDE and with Zend Community Server. You'll probably notice some of the ZS project files in this repo, I've left them in for others who use ZS as it should give all the required settings (not that there's many) for almost instant 'fun' if you check this out as a ZS project.
+P.S. Love it or hate it (I love and hate it in equal measure!! :-) but this has been developed using the Zend Studio IDE and with Zend Community Server. You'll probably notice some of the ZS project files in this repo, I've left them in for others who use ZS as it should give all the required settings for running within ZS (not that there's many anyway) for almost instant 'fun' if you check this out as a ZS project.
+
+In terms of installation, the root folder of this project can be placed anywhere and then add the folder path to your php include_path directive and that's it! Have a look at the 'Example' folder (which hopefully should grow more and more...) for now!
