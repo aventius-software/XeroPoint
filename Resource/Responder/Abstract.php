@@ -8,6 +8,13 @@
 abstract class XeroPoint_Resource_Responder_Abstract {
 	
 	/**
+	 * flag to indicate test mode - default to non-test mode
+	 * 
+	 * @var bool
+	 */
+	protected $testing = false;
+	
+	/**
 	 * use caching by default
 	 * 
 	 * @var bool
@@ -31,6 +38,7 @@ abstract class XeroPoint_Resource_Responder_Abstract {
 	 * implement this method and send correct content type header and return the pre-processed response
 	 * 
 	 * @param string $response
+	 * @param bool $testing
 	 * @return string
 	 */
 	protected function preProcessResponse($response) {
@@ -40,10 +48,9 @@ abstract class XeroPoint_Resource_Responder_Abstract {
 	/**
 	 * returns the complete output including headers to the client
 	 * 
-	 * @param bool $testing
 	 * @return mixed
 	 */
-	public function sendResponse($testing = false) {
+	public function sendResponse() {
 		// start buffer capture
 		ob_start ();
 		
@@ -54,7 +61,7 @@ abstract class XeroPoint_Resource_Responder_Abstract {
 		$buffer = $this->preProcessResponse ( ob_get_clean () );
 		
 		// when testing ignore any headers or further buffering
-		if ($testing) {
+		if ($this->testing) {
 			return $buffer;
 		}
 		
