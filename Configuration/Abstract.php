@@ -9,7 +9,7 @@
 abstract class XeroPoint_Configuration_Abstract {
 	
 	/**
-	 * list of development servers
+	 * list of development servers - localhost by default is in this list
 	 * 
 	 * @var array
 	 */
@@ -44,7 +44,7 @@ abstract class XeroPoint_Configuration_Abstract {
 	 */
 	public function isDevelopmentServer($serverName = null) {
 		if (is_null ( $serverName )) {
-			$serverName = 'localhost';
+			$serverName = $_SERVER ['SERVER_NAME'];
 		}
 		
 		return array_key_exists ( $serverName, $this->developmentServerList );
@@ -60,7 +60,7 @@ abstract class XeroPoint_Configuration_Abstract {
 	 */
 	public function isProductionServer($serverName = null) {
 		if (is_null ( $serverName )) {
-			$serverName = 'localhost';
+			$serverName = $_SERVER ['SERVER_NAME'];
 		}
 		
 		return array_key_exists ( $serverName, $this->productionServerList );
