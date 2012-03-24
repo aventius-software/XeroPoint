@@ -51,6 +51,13 @@ abstract class XeroPoint_Configuration_Abstract {
 	}
 	
 	/**
+	 * implement this to return the current application title
+	 * 
+	 * @return string
+	 */
+	abstract public function getApplicationName();
+	
+	/**
 	 * returns true if the specified server is a development server
 	 * optional first parameter to specify server name otherwise defaults
 	 * to the current server
