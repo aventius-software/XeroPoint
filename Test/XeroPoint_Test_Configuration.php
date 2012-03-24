@@ -3,7 +3,10 @@ require_once 'PHPUnit\Framework\TestCase.php';
 require_once 'XeroPoint.php';
 
 class Configuration_Test_Class extends XeroPoint_Configuration_Abstract {
-
+	
+	public function getApplicationName() {
+		return 'test application';
+	}
 }
 
 class XeroPoint_Test_Configuration extends PHPUnit_Framework_TestCase {
@@ -48,6 +51,14 @@ class XeroPoint_Test_Configuration extends PHPUnit_Framework_TestCase {
 	public function testConfigurationModeDetection() {
 		$mode = $this->testObject->getMode ();
 		$this->assertTrue ( 'Class' == $mode, 'configuration mode detection failed (mode was: ' . $mode . ')' );
+	}
+	
+	/**
+	 * test the application name method is correctly implemented
+	 * 
+	 */
+	public function testGetApplicationName() {
+		$this->assertTrue ( 'test application' == $this->testObject->getApplicationName (), 'application name incorrectly identified' );
 	}
 	
 	/**
