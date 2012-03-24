@@ -8,6 +8,26 @@
 class XeroPoint_Document_HTML {
 	
 	/**
+	 * html5 doctype
+	 * 
+	 * at this time (March 2012) html5 is partially supported by some 
+	 * browsers but it is not a recommended specification as yet by W3C
+	 * 
+	 * @var string
+	 */
+	const DOCTYPE_HTML5 = '<!DOCTYPE html>';
+	
+	/**
+	 * strict xhtml1.0 doctype
+	 * 
+	 * at this time most browsers support xhtml1.0 at least when served 
+	 * as text/html instead of an xml content type
+	 * 
+	 * @var string
+	 */
+	const DOCTYPE_STRICT = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+	
+	/**
 	 * holds the body of html for the document
 	 * 
 	 * @var string
@@ -15,11 +35,25 @@ class XeroPoint_Document_HTML {
 	protected $body = '';
 	
 	/**
+	 * holds the doctype for this document
+	 * 
+	 * @var string
+	 */
+	private $doctype;
+	
+	/**
 	 * entries for the header tag
 	 * 
 	 * @var array
 	 */
 	protected $head = array ();
+	
+	/**
+	 * will hold the html opening tag string for this document
+	 * 
+	 * @var string
+	 */
+	private $htmlOpenTag;
 	
 	/**
 	 * holds any linked CSS 
@@ -48,6 +82,29 @@ class XeroPoint_Document_HTML {
 	 * @var string
 	 */
 	protected $title;
+	
+	/**
+	 * create a new document
+	 * 
+	 * @param string $doctype
+	 */
+	public function __construct($doctype = self::DOCTYPE_STRICT) {
+		$this->doctype = $doctype;
+		
+		switch ($this->doctype) {
+			case self::DOCTYPE_HTML5 :
+				$this->htmlOpenTag = '<html lang="en">';
+				break;
+			
+			case self::DOCTYPE_STRICT :
+				$this->htmlOpenTag = '<html xmlns="http://www.w3.org/1999/xhtml">';
+				break;
+			
+			default :
+				throw new Exception ( 'invalid doctype supplied for the html document object' );
+				break;
+		}
+	}
 	
 	/**
 	 * alias for getHtml()
@@ -163,6 +220,7 @@ class XeroPoint_Document_HTML {
 			}
 		}
 		
+		// return the title and the encoding for the document
 		return '<title>' . $this->title . '</title><meta http-equiv="content-type" content="text/html;charset=utf-8"/>' . $resources . implode ( '', $this->head );
 	}
 	
@@ -179,7 +237,7 @@ class XeroPoint_Document_HTML {
 		$html .= '<body>' . $this->body . '</body>';
 		
 		// now return the complete document
-		return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml">' . $html . '</html>';
+		return $this->doctype . $this->htmlOpenTag . $html . '</html>';
 	}
 	
 	/**
