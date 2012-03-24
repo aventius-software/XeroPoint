@@ -13,7 +13,7 @@ abstract class XeroPoint_Front_Abstract {
 	 * 
 	 * @var XeroPoint_Configuration_Abstract
 	 */
-	protected $configuration;
+	private $configuration;
 	
 	/**
 	 * stores the name of the page parameter
