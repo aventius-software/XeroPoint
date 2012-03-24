@@ -15,7 +15,7 @@ class XeroPoint_Resource_Responder_Script_Unit_Test extends XeroPoint_Resource_R
 	}
 }
 
-class XeroPoint_Test_Resource_Responder_Style extends PHPUnit_Framework_TestCase {
+class XeroPoint_Test_Resource_Responder_Script extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * test object
