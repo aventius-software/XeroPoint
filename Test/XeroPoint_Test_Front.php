@@ -10,7 +10,10 @@ class XeroPoint_Resource_Responder_Style_FrontUnitTest extends XeroPoint_Resourc
 }
 
 class Front_Configuration_Test_Class extends XeroPoint_Configuration_Abstract {
-
+	
+	public function getApplicationName() {
+		return 'test application';
+	}
 }
 
 class Front_Test_Class extends XeroPoint_Front_Abstract {
