@@ -25,6 +25,22 @@ abstract class XeroPoint_Configuration_Abstract {
 	protected $productionServerList = array ();
 	
 	/**
+	 * holds the name of the server
+	 * 
+	 * @var string
+	 */
+	protected $serverName = 'localhost';
+	
+	/**
+	 * create new configuration and optionally set the default server name
+	 * 
+	 * @param string $serverName
+	 */
+	public function __construct($serverName = 'localhost') {
+		$this->serverName = isset ( $_SERVER ['SERVER_NAME'] ) ? $_SERVER ['SERVER_NAME'] : $serverName;
+	}
+	
+	/**
 	 * returns the current mode as string
 	 * 
 	 * @return string
@@ -44,7 +60,7 @@ abstract class XeroPoint_Configuration_Abstract {
 	 */
 	public function isDevelopmentServer($serverName = null) {
 		if (is_null ( $serverName )) {
-			$serverName = $_SERVER ['SERVER_NAME'];
+			$serverName = $this->serverName;
 		}
 		
 		return array_key_exists ( $serverName, $this->developmentServerList );
@@ -60,7 +76,7 @@ abstract class XeroPoint_Configuration_Abstract {
 	 */
 	public function isProductionServer($serverName = null) {
 		if (is_null ( $serverName )) {
-			$serverName = $_SERVER ['SERVER_NAME'];
+			$serverName = $this->serverName;
 		}
 		
 		return array_key_exists ( $serverName, $this->productionServerList );
