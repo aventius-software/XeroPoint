@@ -6,5 +6,13 @@
  */
 
 class XeroPoint_Application_Configuration_Default extends XeroPoint_Configuration_Abstract {
-
+	
+	/**
+	 * returns application name
+	 * 
+	 * @return string
+	 */
+	public function getApplicationName() {
+		return 'XeroPoint Example Application';
+	}
 }
