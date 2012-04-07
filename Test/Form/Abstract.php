@@ -130,5 +130,14 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 		$this->testObject->setHeaderComment ( '<p>header</p>' )->setFooterComment ( '<p>footer</p>' );
 		$this->assertTrue ( '<form><p>header</p><p>footer</p></form>' == $this->testObject->getHtml (), 'incorrect form html returned' );
 	}
+	
+	/**
+	 * tests that the form can add/retrieve controls
+	 * 
+	 */
+	public function testAddControl() {
+		$this->testObject->addControl ( new XeroPoint_Control_TextBox ( 'test' ) );
+		$this->assertTrue ( $this->testObject->getControlByID ( 'test' ) instanceof XeroPoint_Control_TextBox, 'incorrect form control type returned' );
+	}
 }
 
