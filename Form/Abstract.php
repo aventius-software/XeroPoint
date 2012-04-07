@@ -164,7 +164,14 @@ abstract class XeroPoint_Form_Abstract {
 	 * @return string
 	 */
 	public function getHtml() {
-		return $this->getHeaderHtml () . $this->getHeaderComment () . $this->getFooterComment () . $this->getFooterHtml ();
+		$body = '';
+		
+		foreach ( $this->controls as $id => $control ) {
+			/* @var $control XeroPoint_Control_Abstract */
+			$body .= $control->getHtml ();
+		}
+		
+		return $this->getHeaderHtml () . $this->getHeaderComment () . $body . $this->getFooterComment () . $this->getFooterHtml ();
 	}
 	
 	/**
@@ -202,6 +209,17 @@ abstract class XeroPoint_Form_Abstract {
 	 * 
 	 */
 	abstract public function onSuccess();
+	
+	/**
+	 * removes specified control from the form
+	 * 
+	 * @param string $id
+	 * @return XeroPoint_Form_Abstract
+	 */
+	public function removeControl($id) {
+		unset ( $this->controls [$id] );
+		return $this;
+	}
 	
 	/**
 	 * set the lower form comment
