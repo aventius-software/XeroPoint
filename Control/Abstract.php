@@ -23,6 +23,13 @@ abstract class XeroPoint_Control_Abstract {
 	const METHOD_POST = 'post';
 	
 	/**
+	 * holds the name of the container tag to encase controls in (if applicable)
+	 * 
+	 * @var string
+	 */
+	protected $container = '';
+	
+	/**
 	 * holds the ID's of all declared controls in a single script
 	 * 
 	 * @var array
@@ -97,11 +104,32 @@ abstract class XeroPoint_Control_Abstract {
 	}
 	
 	/**
+	 * returns the current container for this control, if any is set
+	 * 
+	 * @return string
+	 */
+	public function getContainer() {
+		return $this->container;
+	}
+	
+	/**
 	 * must implement this method to return string for the controls html
 	 * 
 	 * @return string
 	 */
 	abstract protected function getControlHtml();
+	
+	/**
+	 * returns the complete html for this control with any label and container
+	 * 
+	 * @return string
+	 */
+	public function getHtml() {
+		// create label and control
+		$control = $this->getLabelHtml () . $this->getControlHtml ();
+		
+		return $this->container == '' ? $control : '<' . $this->container . ' id="' . $this->id . '_container">' . $control . '</' . $this->container . '>';
+	}
 	
 	/**
 	 * returns the ID of this control
@@ -119,7 +147,7 @@ abstract class XeroPoint_Control_Abstract {
 	 * @return string
 	 */
 	public function getLabelHtml() {
-		return is_null ( $this->label ) ? '' : '<label id="' . $this->id . '_label" for="' . $this->id . '">' . htmlentities ( $this->label ) . '</label>';
+		return is_null ( $this->label ) || ! $this->displayLabel ? '' : '<label id="' . $this->id . '_label" for="' . $this->id . '">' . htmlentities ( $this->label ) . '</label>';
 	}
 	
 	/**
@@ -147,6 +175,17 @@ abstract class XeroPoint_Control_Abstract {
 	 */
 	public function hideLabel() {
 		$this->displayLabel = false;
+		return $this;
+	}
+	
+	/**
+	 * set the container tag for this control e.g. DIV
+	 * 
+	 * @param string $container
+	 * @return XeroPoint_Control_Abstract
+	 */
+	public function setContainer($container) {
+		$this->container = strtolower ( $container );
 		return $this;
 	}
 	
