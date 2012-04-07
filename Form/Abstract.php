@@ -211,6 +211,16 @@ abstract class XeroPoint_Form_Abstract {
 	abstract public function onSuccess();
 	
 	/**
+	 * remove all controls currently attached to this form
+	 * 
+	 * @return XeroPoint_Form_Abstract
+	 */
+	public function removeAllControls() {
+		$this->controls = array ();
+		return $this;
+	}
+	
+	/**
 	 * removes specified control from the form
 	 * 
 	 * @param string $id
