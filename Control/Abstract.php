@@ -23,6 +23,13 @@ abstract class XeroPoint_Control_Abstract {
 	const METHOD_POST = 'post';
 	
 	/**
+	 * holds any html that will be appended to the control inside its container
+	 * 
+	 * @var string
+	 */
+	protected $appendHtml = '';
+	
+	/**
 	 * holds the name of the container tag to encase controls in (if applicable)
 	 * 
 	 * @var string
@@ -79,6 +86,13 @@ abstract class XeroPoint_Control_Abstract {
 	protected $name;
 	
 	/**
+	 * holds any html that will be prepended to the control inside its container
+	 * 
+	 * @var string
+	 */
+	protected $prependHtml = '';
+	
+	/**
 	 * flag to indicate if this control is readonly or not (default is not readonly)
 	 * 
 	 * @var bool
@@ -119,6 +133,26 @@ abstract class XeroPoint_Control_Abstract {
 	}
 	
 	/**
+	 * appends html to the control inside its container (if it has a container that is...)
+	 * 
+	 * @param string $html
+	 * @return XeroPoint_Control_Abstract
+	 */
+	public function appendHtml($html) {
+		$this->appendHtml = $html;
+		return $this;
+	}
+	
+	/**
+	 * returns the append html if any
+	 * 
+	 * @return string
+	 */
+	public function getAppendHtml() {
+		return $this->appendHtml;
+	}
+	
+	/**
 	 * returns the current container for this control, if any is set
 	 * 
 	 * @return string
@@ -140,8 +174,7 @@ abstract class XeroPoint_Control_Abstract {
 	 * @return string
 	 */
 	public function getHtml() {
-		// create label and control
-		$control = $this->getLabelHtml () . $this->getControlHtml ();
+		$control = $this->prependHtml . $this->getLabelHtml () . $this->getControlHtml () . $this->appendHtml;
 		
 		return $this->container == '' ? $control : '<' . $this->container . ' id="' . $this->id . '_container">' . $control . '</' . $this->container . '>';
 	}
@@ -193,12 +226,32 @@ abstract class XeroPoint_Control_Abstract {
 	}
 	
 	/**
+	 * returns the prepend html if any
+	 * 
+	 * @return string
+	 */
+	public function getPrependHtml() {
+		return $this->prependHtml;
+	}
+	
+	/**
 	 * tells this control to not output a label
 	 * 
 	 * @return XeroPoint_Control_Abstract
 	 */
 	public function hideLabel() {
 		$this->displayLabel = false;
+		return $this;
+	}
+	
+	/**
+	 * set the html to be prepended to the control inside its container
+	 * 
+	 * @param string $html
+	 * @return XeroPoint_Control_Abstract
+	 */
+	public function prependHtml($html) {
+		$this->prependHtml = $html;
 		return $this;
 	}
 	

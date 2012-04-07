@@ -160,5 +160,23 @@ class XeroPoint_Test_Control_Abstract extends PHPUnit_Framework_TestCase {
 	public function testGetName() {
 		$this->assertTrue ( self::TEST_CONTROL_ID == $this->testObject->getName (), 'incorrect control name returned' );
 	}
+	
+	/**
+	 * tests that the append html mechanism works correctly
+	 * 
+	 */
+	public function testAppendHtml() {
+		$this->testObject->appendHtml ( '<div>test</div>' );
+		$this->assertTrue ( '<div>test</div>' == $this->testObject->getAppendHtml (), 'incorrect appended html found' );
+	}
+	
+	/**
+	 * tests that the prepend html mechanism works correctly
+	 * 
+	 */
+	public function testPrependHtml() {
+		$this->testObject->prependHtml ( '<div>test</div>' );
+		$this->assertTrue ( '<div>test</div>' == $this->testObject->getPrependHtml (), 'incorrect prepended html found' );
+	}
 }
 
