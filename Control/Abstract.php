@@ -72,6 +72,20 @@ abstract class XeroPoint_Control_Abstract {
 	protected $method;
 	
 	/**
+	 * holds the name of the control
+	 * 
+	 * @var string
+	 */
+	protected $name;
+	
+	/**
+	 * flag to indicate if this control is readonly or not (default is not readonly)
+	 * 
+	 * @var bool
+	 */
+	protected $readOnly = false;
+	
+	/**
 	 * create a new control
 	 * 
 	 * @param string $id
@@ -93,8 +107,9 @@ abstract class XeroPoint_Control_Abstract {
 			throw new Exception ( 'this control is already defined elsewhere in this script' );
 		}
 		
-		// set the name of this form
+		// set the id/name of this control
 		$this->id = $id;
+		$this->name = $id;
 		
 		// save this form
 		self::$controls [$id] = $id;
@@ -169,6 +184,15 @@ abstract class XeroPoint_Control_Abstract {
 	}
 	
 	/**
+	 * returns the name of this control
+	 * 
+	 * @return string
+	 */
+	public function getName() {
+		return $this->name;
+	}
+	
+	/**
 	 * tells this control to not output a label
 	 * 
 	 * @return XeroPoint_Control_Abstract
@@ -225,6 +249,17 @@ abstract class XeroPoint_Control_Abstract {
 	 */
 	public function setMethod($method) {
 		$this->method = $method;
+		return $this;
+	}
+	
+	/**
+	 * set the name of this control
+	 * 
+	 * @param string $name
+	 * @return XeroPoint_Control_Abstract
+	 */
+	public function setName($name) {
+		$this->name = $name;
 		return $this;
 	}
 	

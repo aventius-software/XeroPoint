@@ -152,5 +152,13 @@ class XeroPoint_Test_Control_Abstract extends PHPUnit_Framework_TestCase {
 		$this->testObject->showLabel ();
 		$this->assertTrue ( '<label id="' . self::TEST_CONTROL_ID . '_label" for="' . self::TEST_CONTROL_ID . '">testlabel</label>' == $this->testObject->getLabelHtml (), 'incorrect label html returned' );
 	}
+	
+	/**
+	 * tests that the name of the control is correctly returned
+	 * 
+	 */
+	public function testGetName() {
+		$this->assertTrue ( self::TEST_CONTROL_ID == $this->testObject->getName (), 'incorrect control name returned' );
+	}
 }
 
