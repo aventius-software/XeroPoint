@@ -136,8 +136,17 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 	 * 
 	 */
 	public function testAddControl() {
-		$this->testObject->addControl ( new XeroPoint_Control_TextBox ( 'test' ) );
-		$this->assertTrue ( $this->testObject->getControlByID ( 'test' ) instanceof XeroPoint_Control_TextBox, 'incorrect form control type returned' );
+		$this->testObject->addControl ( new XeroPoint_Control_TextBox ( 'add' ) );
+		$this->assertTrue ( $this->testObject->getControlByID ( 'add' ) instanceof XeroPoint_Control_TextBox, 'incorrect form control type returned' );
+	}
+	
+	/**
+	 * tests that we can remove controls from the form
+	 * 
+	 */
+	public function testRemoveControl() {
+		$this->testObject->addControl ( new XeroPoint_Control_TextBox ( 'remove' ) )->removeControl ( 'remove' );
+		$this->assertTrue ( $this->testObject->getControlByID ( 'remove' ) === null, 'incorrect form control type returned' );
 	}
 }
 
