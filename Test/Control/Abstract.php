@@ -3,7 +3,10 @@ require_once 'PHPUnit\Framework\TestCase.php';
 require_once 'XeroPoint.php';
 
 class Control_Test_Class extends XeroPoint_Control_Abstract {
-
+	
+	protected function getControlHtml() {
+		return '<div>control html</div>';
+	}
 }
 
 class XeroPoint_Test_Control_Abstract extends PHPUnit_Framework_TestCase {
@@ -28,7 +31,7 @@ class XeroPoint_Test_Control_Abstract extends PHPUnit_Framework_TestCase {
 	 */
 	protected function setUp() {
 		parent::setUp ();
-		$this->testObject = new Control_Test_Class ( self::TEST_CONTROL_ID );
+		$this->testObject = new Control_Test_Class ( self::TEST_CONTROL_ID, XeroPoint_Control_Abstract::METHOD_POST );
 	}
 	
 	/**
@@ -104,6 +107,29 @@ class XeroPoint_Test_Control_Abstract extends PHPUnit_Framework_TestCase {
 	 */
 	public function testSetMaxLengthPassesWithIntegerValue() {
 		$this->assertTrue ( $this->testObject->setMaxLength ( 123 ) instanceof XeroPoint_Control_Abstract, 'invalid object returned' );
+	}
+	
+	/**
+	 * tests the correct method type has been set
+	 * 
+	 */
+	public function testGetMethod() {
+		$this->assertTrue ( XeroPoint_Control_Abstract::METHOD_POST == $this->testObject->getMethod (), 'incorrect method returned' );
+	}
+	
+	/**
+	 * tests that the label html code is correct
+	 * 
+	 */
+	public function testGetLabelHtml() {
+		$this->testObject->setLabel ( 'hello' );
+		
+		$expectedHtml = '<label id="' . self::TEST_CONTROL_ID . '_label" for="' . self::TEST_CONTROL_ID . '">hello</label>';
+		$actualHtml = $this->testObject->getLabelHtml ();
+		
+		echo "\nACTUAL LABEL HTML:\n$actualHtml";
+		
+		$this->assertTrue ( $expectedHtml == $this->testObject->getLabelHtml (), 'incorrect label html found' );
 	}
 }
 
