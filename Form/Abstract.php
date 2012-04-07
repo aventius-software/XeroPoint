@@ -9,6 +9,20 @@
 abstract class XeroPoint_Form_Abstract {
 	
 	/**
+	 * GET method
+	 * 
+	 * @var string
+	 */
+	const METHOD_GET = 'get';
+	
+	/**
+	 * POST method
+	 * 
+	 * @var string
+	 */
+	const METHOD_POST = 'post';
+	
+	/**
 	 * holds all the controls attached to this form
 	 * 
 	 * @var array
@@ -51,18 +65,25 @@ abstract class XeroPoint_Form_Abstract {
 	protected $method;
 	
 	/**
-	 * GET method
+	 * flag to indicate if this form has been processed
 	 * 
-	 * @var string
+	 * @var bool
 	 */
-	const METHOD_GET = 'get';
+	protected $processed = false;
 	
 	/**
-	 * POST method
+	 * holds a unique identifier for a hidden form control to track the form
 	 * 
 	 * @var string
 	 */
-	const METHOD_POST = 'post';
+	protected $trackingID;
+	
+	/**
+	 * used for tracking the form
+	 * 
+	 * @var string
+	 */
+	protected $trackingValue = 0;
 	
 	/**
 	 * create a new form
@@ -88,6 +109,7 @@ abstract class XeroPoint_Form_Abstract {
 		
 		// set the name of this form
 		$this->id = $id;
+		$this->trackingID = $id . '_xpID' . rand ( 10000, 99999 );
 		
 		// and the method
 		$this->method = $method;
@@ -103,6 +125,10 @@ abstract class XeroPoint_Form_Abstract {
 	 * @return XeroPoint_Form_Abstract
 	 */
 	public function addControl(XeroPoint_Control_Abstract $control) {
+		if ($this->processed) {
+			throw new Exception ( 'form controls cannot be added after the form has been processed' );
+		}
+		
 		if (key_exists ( $control->getID (), $this->controls )) {
 			throw new Exception ( 'a control with the ID: ' . $control->getID () . ', has already been added to this form!' );
 		} else {
@@ -164,7 +190,11 @@ abstract class XeroPoint_Form_Abstract {
 	 * @return string
 	 */
 	public function getHtml() {
-		$body = '';
+		if (! $this->processed) {
+			throw new Exception ( 'this form must be processed before any html can be generated' );
+		}
+		
+		$body = '<p><input id="' . $this->trackingID . '" type="hidden" value="' . $this->trackingValue . '"/></p>';
 		
 		foreach ( $this->controls as $id => $control ) {
 			/* @var $control XeroPoint_Control_Abstract */
@@ -193,6 +223,25 @@ abstract class XeroPoint_Form_Abstract {
 	}
 	
 	/**
+	 * returns the ID of the tracking control
+	 * 
+	 * @return string
+	 */
+	public function getTrackingID() {
+		return $this->trackingID;
+	}
+	
+	/**
+	 * returns bool to indicate if this form has been submitted and its fields are in the post
+	 * note that this does not apply to checkbox fields as these are not set in the post if unchecked!
+	 *
+	 * @return bool
+	 */
+	public function hasSubmittedData() {
+		return $this->method == self::METHOD_POST ? isset ( $_POST [$this->trackingID] ) : isset ( $_GET [$this->trackingID] );
+	}
+	
+	/**
 	 * method to handle failures
 	 * 
 	 */
@@ -209,6 +258,18 @@ abstract class XeroPoint_Form_Abstract {
 	 * 
 	 */
 	abstract public function onSuccess();
+	
+	/**
+	 * this method processes the form, checks its rules and calls any control validation
+	 * 
+	 * @return XeroPoint_Form_Abstract
+	 */
+	public function process() {
+		$this->processed = true;
+		$this->trackingValue = 1;
+		
+		return $this;
+	}
 	
 	/**
 	 * remove all controls currently attached to this form

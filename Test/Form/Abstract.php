@@ -127,8 +127,12 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 	 * 
 	 */
 	public function testGetHtml() {
-		$this->testObject->setHeaderComment ( '<p>header</p>' )->setFooterComment ( '<p>footer</p>' );
-		$this->assertTrue ( '<form><p>header</p><p>footer</p></form>' == $this->testObject->getHtml (), 'incorrect form html returned' );
+		$html = $this->testObject->setHeaderComment ( '<p>header</p>' )->setFooterComment ( '<p>footer</p>' )->process ()->getHtml ();
+		
+		echo "\nFORM HTML WITHOUT CONTROLS:-\n$html\n";
+		
+		$trackingID = $this->testObject->getTrackingID ();
+		$this->assertTrue ( '<form><p>header</p><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><p>footer</p></form>' == $html, 'incorrect form html returned' );
 	}
 	
 	/**
@@ -155,11 +159,12 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGetHtmlWithControl() {
 		$this->testObject->removeAllControls ();
-		$html = $this->testObject->addControl ( new XeroPoint_Control_TextBox ( 'test' ) )->getHtml ();
+		$html = $this->testObject->addControl ( new XeroPoint_Control_TextBox ( 'test' ) )->process ()->getHtml ();
 		
-		echo "\nFORM HTML OUTPUT WITH CONTROL:-\n$html";
+		echo "\nFORM HTML OUTPUT WITH CONTROL:-\n$html\n";
 		
-		$this->assertTrue ( '<form><input id="test" type="text"/></form>' == $this->testObject->getHtml (), 'incorrect form html' );
+		$trackingID = $this->testObject->getTrackingID ();
+		$this->assertTrue ( '<form><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><input id="test" type="text"/></form>' == $this->testObject->getHtml (), 'incorrect form html' );
 	}
 }
 
