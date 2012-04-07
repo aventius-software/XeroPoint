@@ -131,5 +131,26 @@ class XeroPoint_Test_Control_Abstract extends PHPUnit_Framework_TestCase {
 		
 		$this->assertTrue ( $expectedHtml == $this->testObject->getLabelHtml (), 'incorrect label html found' );
 	}
+	
+	/**
+	 * tests the container tag for the control is set properly
+	 * 
+	 */
+	public function testGetContainer() {
+		$this->testObject->setContainer ( 'div' );
+		$this->assertTrue ( 'div' == $this->testObject->getContainer (), 'incorrect html container returned' );
+	}
+	
+	/**
+	 * tests that the show/hide label methods work correctly
+	 * 
+	 */
+	public function testShowHideLabel() {
+		$this->testObject->setLabel ( 'testlabel' )->hideLabel ();
+		$this->assertTrue ( '' == $this->testObject->getLabelHtml (), 'hidden label returned more than a blank string' );
+		
+		$this->testObject->showLabel ();
+		$this->assertTrue ( '<label id="' . self::TEST_CONTROL_ID . '_label" for="' . self::TEST_CONTROL_ID . '">testlabel</label>' == $this->testObject->getLabelHtml (), 'incorrect label html returned' );
+	}
 }
 
