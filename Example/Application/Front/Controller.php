@@ -21,13 +21,20 @@ class XeroPoint_Application_Front_Controller extends XeroPoint_Front_Abstract {
 	 * 
 	 */
 	public function main() {
-		// pass to controller for something
-		echo $this->runController ( new XeroPoint_Application_Controller_Default () );
+		// create a document/layout to work with
+		$document = new XeroPoint_Document_HTML ();
+		$document->setTitle ( $this->getConfiguration ()->getApplicationName () );
+		
+		// pass to controller for something and get any html returned by the controller
+		$document->addBodyHtml ( $this->runController ( new XeroPoint_Application_Controller_Default ( $document ) ) );
 		
 		// access the XeroPoint sub system
 		$xeroPoint = new XeroPoint ();
 		
 		// now handle any duties
-		echo 'application ready (processed in: ' . $xeroPoint->getApplicationStartTime ( true ) . ')';
+		$document->addBodyHtml ( '<div>application ready (processed in: ' . $xeroPoint->getApplicationStartTime ( true ) . ')</div>' );
+		
+		// output to client
+		echo $document;
 	}
 }
