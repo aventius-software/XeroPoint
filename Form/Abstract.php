@@ -9,6 +9,13 @@
 abstract class XeroPoint_Form_Abstract {
 	
 	/**
+	 * holds all the controls attached to this form
+	 * 
+	 * @var array
+	 */
+	protected $controls = array ();
+	
+	/**
 	 * holds the ID's of all declared forms in a single script
 	 * 
 	 * @var array
@@ -87,6 +94,32 @@ abstract class XeroPoint_Form_Abstract {
 		
 		// save this form
 		self::$forms [$id] = $id;
+	}
+	
+	/**
+	 * add a control to the form
+	 * 
+	 * @param XeroPoint_Control_Abstract $control
+	 * @return XeroPoint_Form_Abstract
+	 */
+	public function addControl(XeroPoint_Control_Abstract $control) {
+		if (key_exists ( $control->getID (), $this->controls )) {
+			throw new Exception ( 'a control with the ID: ' . $control->getID () . ', has already been added to this form!' );
+		} else {
+			$this->controls [$control->getID ()] = $control;
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * returns the requested control if it exists otherwise null
+	 * 
+	 * @param string $id
+	 * @return XeroPoint_Control_Abstract
+	 */
+	public function getControlByID($id) {
+		return isset ( $this->controls [$id] ) ? $this->controls [$id] : null;
 	}
 	
 	/**
