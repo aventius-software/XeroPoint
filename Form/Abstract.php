@@ -98,7 +98,7 @@ abstract class XeroPoint_Form_Abstract {
 		}
 		
 		// when performing tests reset the cache!
-		if (class_exists ( 'PHPUnit_Framework_TestCase' )) {
+		if (class_exists ( 'PHPUnit_Framework_TestCase', false )) {
 			self::$forms = array ();
 		}
 		
@@ -136,6 +136,20 @@ abstract class XeroPoint_Form_Abstract {
 		}
 		
 		return $this;
+	}
+	
+	/**
+	 * return the current action URL
+	 * 
+	 * @return string
+	 */
+	public function getActionURL() {
+		$protocol = isset ( $_SERVER ['HTTPS'] ) && strtolower ( $_SERVER ['HTTPS'] ) == 'on' ? 'https://' : 'http://';
+		$server = $_SERVER ['SERVER_NAME'];
+		$script = $_SERVER ['SCRIPT_NAME'];
+		$qs = $_SERVER ['QUERY_STRING'] == '' ? '' : '?' . str_replace ( '&', '&amp;', $_SERVER ['QUERY_STRING'] );
+		
+		return $protocol . $server . $script . $qs;
 	}
 	
 	/**
@@ -181,7 +195,7 @@ abstract class XeroPoint_Form_Abstract {
 	 * @return string
 	 */
 	public function getHeaderHtml() {
-		return '<form>';
+		return '<form id="' . $this->id . '" action="' . $this->getActionURL () . '">';
 	}
 	
 	/**
@@ -265,6 +279,8 @@ abstract class XeroPoint_Form_Abstract {
 	 * @return XeroPoint_Form_Abstract
 	 */
 	public function process() {
+		$this->onLoad ();
+		
 		$this->processed = true;
 		$this->trackingValue = 1;
 		
