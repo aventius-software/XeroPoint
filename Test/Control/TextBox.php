@@ -21,5 +21,18 @@ class XeroPoint_Test_Control_TextBox extends XeroPoint_Test_Control_Abstract {
 		$this->testObject = null;
 		parent::tearDown ();
 	}
+	
+	/**
+	 * tests that the textbox html is correctly formed
+	 * 
+	 */
+	public function testGetHtml() {
+		$expected = '<input id="' . self::TEST_CONTROL_ID . '" type="text" maxlength="255" value=""/>';
+		$actual = $this->testObject->getHtml ();
+		
+		echo "\nHTML FOR TEXTBOX CONTROL:\n$actual\n";
+		
+		$this->assertTrue ( $expected == $actual, 'incorrect textbox html found' );
+	}
 }
 

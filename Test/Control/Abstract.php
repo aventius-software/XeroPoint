@@ -158,6 +158,7 @@ class XeroPoint_Test_Control_Abstract extends PHPUnit_Framework_TestCase {
 	 * 
 	 */
 	public function testGetName() {
+		$this->testObject->setName ( self::TEST_CONTROL_ID );
 		$this->assertTrue ( self::TEST_CONTROL_ID == $this->testObject->getName (), 'incorrect control name returned' );
 	}
 	

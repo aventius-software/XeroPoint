@@ -14,6 +14,6 @@ class XeroPoint_Control_TextBox extends XeroPoint_Control_Abstract {
 	 * @return string
 	 */
 	protected function getControlHtml() {
-		return '<input id="' . $this->id . '" type="text"/>';
+		return $this->getInputHtml ();
 	}
 }

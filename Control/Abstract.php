@@ -44,6 +44,13 @@ abstract class XeroPoint_Control_Abstract {
 	protected static $controls = array ();
 	
 	/**
+	 * flag to indicate if this control is disabled or not
+	 * 
+	 * @var bool
+	 */
+	protected $disabled = false;
+	
+	/**
 	 * flag to indicate display or not for the controls label
 	 * 
 	 * @var bool
@@ -100,6 +107,13 @@ abstract class XeroPoint_Control_Abstract {
 	protected $readOnly = false;
 	
 	/**
+	 * holds the value of this control
+	 * 
+	 * @var mixed
+	 */
+	protected $value;
+	
+	/**
 	 * create a new control
 	 * 
 	 * @param string $id
@@ -123,7 +137,6 @@ abstract class XeroPoint_Control_Abstract {
 		
 		// set the id/name of this control
 		$this->id = $id;
-		$this->name = $id;
 		
 		// save this form
 		self::$controls [$id] = $id;
@@ -177,6 +190,46 @@ abstract class XeroPoint_Control_Abstract {
 		$control = $this->prependHtml . $this->getLabelHtml () . $this->getControlHtml () . $this->appendHtml;
 		
 		return $this->container == '' ? $control : '<' . $this->container . ' id="' . $this->id . '_container">' . $control . '</' . $this->container . '>';
+	}
+	
+	/**
+	 * returns basic html for an input control, lazy sets type as 'text'
+	 * 
+	 * @param string $type
+	 * @param array $extendedAttributes
+	 * @return string
+	 */
+	protected function getInputHtml($type = 'text', $extendedAttributes = array()) {
+		// set the ID field
+		$id = 'id="' . $this->id . '"';
+		
+		// is this field disabled?
+		$disabled = $this->disabled ? ' disabled="disabled"' : '';
+		
+		// set the max length
+		$maxLength = ' maxlength="' . $this->maxLength . '"';
+		
+		// set the name field
+		$name = is_null ( $this->name ) ? '' : ' name="' . $this->name . '"';
+		
+		// is this read only?
+		$readOnly = $this->readOnly ? ' readonly="readonly"' : '';
+		
+		// set the type
+		$type = ' type="' . $type . '"';
+		
+		// set the value
+		$value = ' value="' . htmlentities ( $this->value ) . '"';
+		
+		// any extended attributes
+		$extensions = '';
+		
+		foreach ( $extendedAttributes as $attributeName => $attributeValue ) {
+			$extensions .= ' ' . $attributeName . '="' . $attributeValue . '"';
+		}
+		
+		// return the xhtml code
+		return '<input ' . $id . $name . $type . $maxLength . $readOnly . $disabled . $extensions . $value . '/>';
 	}
 	
 	/**
