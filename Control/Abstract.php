@@ -126,7 +126,7 @@ abstract class XeroPoint_Control_Abstract {
 		}
 		
 		// when performing tests reset the cache!
-		if (class_exists ( 'PHPUnit_Framework_TestCase' ) && array_key_exists ( $id, self::$controls )) {
+		if (class_exists ( 'PHPUnit_Framework_TestCase', false ) && array_key_exists ( $id, self::$controls )) {
 			unset ( self::$controls [$id] );
 		}
 		
@@ -143,6 +143,9 @@ abstract class XeroPoint_Control_Abstract {
 		
 		// save the method type
 		$this->method = $method;
+		
+		// set the default container as p
+		$this->container = 'p';
 	}
 	
 	/**
