@@ -8,6 +8,15 @@
 class XeroPoint_Application_Controller_Default extends XeroPoint_Controller_Abstract {
 	
 	/**
+	 * create the default controller and add example CSS resource
+	 * 
+	 * @param XeroPoint_Document_HTML $document
+	 */
+	public function __construct(XeroPoint_Document_HTML $document) {
+		$document->addResource ( new XeroPoint_Application_Resource_Manager_Style_Example () );
+	}
+	
+	/**
 	 * controller entry point
 	 * 
 	 * @param XeroPoint_Front_Abstract $front
