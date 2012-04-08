@@ -23,7 +23,7 @@ class XeroPoint_Test_Control_Button extends XeroPoint_Test_Control_Abstract {
 	}
 	
 	/**
-	 * tests that the textbox html is correctly formed
+	 * tests that the button html is correctly formed
 	 * 
 	 */
 	public function testGetHtml() {
