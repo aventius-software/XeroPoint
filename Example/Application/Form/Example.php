@@ -29,12 +29,19 @@ class XeroPoint_Application_Form_Example extends XeroPoint_Form_Abstract {
 		// add a test textbox
 		$this->addControl ( $textbox );
 		
+		// create a fieldset
+		$fieldset = new XeroPoint_Form_FieldSet ( 'I_am_a_fieldset' );
+		$fieldset->setLegend ( 'I am a legend' );
+		
 		// and a submit button
 		$submit = new XeroPoint_Control_Submit ( 'I_am_a_submit_button' );
 		$submit->setLabel ( 'click me' );
 		
-		// add to the form
-		$this->addControl ( $submit );
+		// add to the fieldset
+		$fieldset->addControl ( $submit );
+		
+		// add fieldset to the form
+		$this->addFieldSet ( $fieldset );
 	}
 	
 	/**
