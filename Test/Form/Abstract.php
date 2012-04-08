@@ -75,11 +75,12 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 	 * 
 	 */
 	public function testGetHeaderHtml() {
+		$expected = '<form id="' . self::TEST_FORM_ID . '" action="' . $this->testObject->getActionURL () . '" enctype="application/x-www-form-urlencoded">';
 		$actual = $this->testObject->getHeaderHtml ();
 		
-		echo "\nOUTPUT FORM HTML:\n$actual\n";
+		echo "\n\nFORM HTML OUTPUT (EXPECTED):\n$expected\n\n$actual\n";
 		
-		$this->assertTrue ( '<form id="' . self::TEST_FORM_ID . '" action="' . $this->testObject->getActionURL () . '">' == $this->testObject->getHeaderHtml (), 'incorrect header html returned' );
+		$this->assertTrue ( $expected == $actual, 'incorrect form header html returned' );
 	}
 	
 	/**
@@ -131,12 +132,14 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 	 * 
 	 */
 	public function testGetHtml() {
-		$html = $this->testObject->setHeaderComment ( '<p>header</p>' )->setFooterComment ( '<p>footer</p>' )->process ()->getHtml ();
-		
-		echo "\nFORM HTML WITHOUT CONTROLS:-\n$html\n";
-		
 		$trackingID = $this->testObject->getTrackingID ();
-		$this->assertTrue ( '<form id="' . self::TEST_FORM_ID . '" action="' . $this->testObject->getActionURL () . '"><p>header</p><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><p>footer</p></form>' == $html, 'incorrect form html returned' );
+		$action = $this->testObject->getActionURL ();
+		$expected = '<form id="' . self::TEST_FORM_ID . '" action="' . $action . '" enctype="application/x-www-form-urlencoded"><p>header</p><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><p>footer</p></form>';
+		$actual = $this->testObject->setHeaderComment ( '<p>header</p>' )->setFooterComment ( '<p>footer</p>' )->process ()->getHtml ();
+		
+		echo "\n\nFORM HTML OUTPUT WITHOUT CONTROLS (EXPECTED):-\n$expected\n\n(ACTUAL)\n$actual\n";
+		
+		$this->assertTrue ( $expected == $actual, 'incorrect form html returned' );
 	}
 	
 	/**
@@ -163,11 +166,14 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGetHtmlWithControl() {
 		$this->testObject->removeAllControls ();
-		$html = $this->testObject->addControl ( new XeroPoint_Control_TextBox ( 'test' ) )->process ()->getHtml ();
-		
-		echo "\nFORM HTML OUTPUT WITH CONTROL:-\n$html\n";
 		
 		$trackingID = $this->testObject->getTrackingID ();
-		$this->assertTrue ( '<form id="' . self::TEST_FORM_ID . '" action="' . $this->testObject->getActionURL () . '"><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><p id="test_container"><input id="test" type="text" maxlength="255" value=""/></p></form>' == $this->testObject->getHtml (), 'incorrect form html' );
+		$action = $this->testObject->getActionURL ();
+		$expected = '<form id="' . self::TEST_FORM_ID . '" action="' . $action . '" enctype="application/x-www-form-urlencoded"><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><p id="test_container"><input id="test" type="text" maxlength="255" value=""/></p></form>';
+		$actual = $this->testObject->addControl ( new XeroPoint_Control_TextBox ( 'test' ) )->process ()->getHtml ();
+		
+		echo "\n\nFORM HTML OUTPUT WITH CONTROL (EXPECTED):-\n$expected\n\n(ACTUAL)\n$actual\n";
+		
+		$this->assertTrue ( $expected == $actual, 'incorrect form html returned' );
 	}
 }

@@ -37,6 +37,13 @@ abstract class XeroPoint_Form_Abstract {
 	protected $enctype = 'application/x-www-form-urlencoded';
 	
 	/**
+	 * holds any attached fieldsets
+	 * 
+	 * @var array
+	 */
+	protected $fieldSets = array ();
+	
+	/**
 	 * holds the ID's of all declared forms in a single script
 	 * 
 	 * @var array
@@ -146,6 +153,17 @@ abstract class XeroPoint_Form_Abstract {
 	}
 	
 	/**
+	 * add a fieldset to the form for processing and output
+	 * 
+	 * @param XeroPoint_Form_FieldSet $fieldSet
+	 * @return XeroPoint_Form_Abstract
+	 */
+	public function addFieldSet(XeroPoint_Form_FieldSet $fieldSet) {
+		$this->fieldSets [$fieldSet->getID ()] = $fieldSet;
+		return $this;
+	}
+	
+	/**
 	 * return the current action URL
 	 * 
 	 * @return string
@@ -211,12 +229,21 @@ abstract class XeroPoint_Form_Abstract {
 	 * @return string
 	 */
 	public function getHtml() {
+		// forms must always be processed first!
 		if (! $this->processed) {
 			throw new Exception ( 'this form must be processed before any html can be generated' );
 		}
 		
+		// create a hidden field to track the form
 		$body = '<p><input id="' . $this->trackingID . '" type="hidden" value="' . $this->trackingValue . '"/></p>';
 		
+		// now first process any attached fieldsets and their controls
+		foreach ( $this->fieldSets as $id => $fieldSet ) {
+			/* @var $fieldSet XeroPoint_Form_FieldSet */
+			$body .= $fieldSet->getHtml ();
+		}
+		
+		// now add any attached controls to the html output
 		foreach ( $this->controls as $id => $control ) {
 			/* @var $control XeroPoint_Control_Abstract */
 			$body .= $control->getHtml ();
