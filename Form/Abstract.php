@@ -30,6 +30,13 @@ abstract class XeroPoint_Form_Abstract {
 	protected $controls = array ();
 	
 	/**
+	 * holds the form enctype attribute value
+	 * 
+	 * @var string
+	 */
+	protected $enctype = 'application/x-www-form-urlencoded';
+	
+	/**
 	 * holds the ID's of all declared forms in a single script
 	 * 
 	 * @var array
@@ -195,7 +202,7 @@ abstract class XeroPoint_Form_Abstract {
 	 * @return string
 	 */
 	public function getHeaderHtml() {
-		return '<form id="' . $this->id . '" action="' . $this->getActionURL () . '">';
+		return '<form id="' . $this->id . '" action="' . $this->getActionURL () . '" enctype="' . $this->enctype . '">';
 	}
 	
 	/**
