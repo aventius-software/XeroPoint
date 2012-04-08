@@ -171,4 +171,3 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 		$this->assertTrue ( '<form id="' . self::TEST_FORM_ID . '" action="' . $this->testObject->getActionURL () . '"><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><p id="test_container"><input id="test" type="text" maxlength="255" value=""/></p></form>' == $this->testObject->getHtml (), 'incorrect form html' );
 	}
 }
-
