@@ -28,6 +28,13 @@ class XeroPoint_Application_Form_Example extends XeroPoint_Form_Abstract {
 		
 		// add a test textbox
 		$this->addControl ( $textbox );
+		
+		// and a submit button
+		$submit = new XeroPoint_Control_Submit ( 'I_am_a_submit_button' );
+		$submit->setLabel ( 'click me' );
+		
+		// add to the form
+		$this->addControl ( $submit );
 	}
 	
 	/**
