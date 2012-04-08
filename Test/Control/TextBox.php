@@ -27,7 +27,7 @@ class XeroPoint_Test_Control_TextBox extends XeroPoint_Test_Control_Abstract {
 	 * 
 	 */
 	public function testGetHtml() {
-		$expected = '<input id="' . self::TEST_CONTROL_ID . '" type="text" maxlength="255" value=""/>';
+		$expected = '<p id="' . self::TEST_CONTROL_ID . '_container"><input id="' . self::TEST_CONTROL_ID . '" type="text" maxlength="255" value=""/></p>';
 		$actual = $this->testObject->getHtml ();
 		
 		echo "\nHTML FOR TEXTBOX CONTROL:\n$actual\n";

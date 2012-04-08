@@ -75,7 +75,11 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 	 * 
 	 */
 	public function testGetHeaderHtml() {
-		$this->assertTrue ( '<form>' == $this->testObject->getHeaderHtml (), 'incorrect header html returned' );
+		$actual = $this->testObject->getHeaderHtml ();
+		
+		echo "\nOUTPUT FORM HTML:\n$actual\n";
+		
+		$this->assertTrue ( '<form id="' . self::TEST_FORM_ID . '" action="' . $this->testObject->getActionURL () . '">' == $this->testObject->getHeaderHtml (), 'incorrect header html returned' );
 	}
 	
 	/**
@@ -132,7 +136,7 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 		echo "\nFORM HTML WITHOUT CONTROLS:-\n$html\n";
 		
 		$trackingID = $this->testObject->getTrackingID ();
-		$this->assertTrue ( '<form><p>header</p><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><p>footer</p></form>' == $html, 'incorrect form html returned' );
+		$this->assertTrue ( '<form id="' . self::TEST_FORM_ID . '" action="' . $this->testObject->getActionURL () . '"><p>header</p><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><p>footer</p></form>' == $html, 'incorrect form html returned' );
 	}
 	
 	/**
@@ -164,7 +168,7 @@ class XeroPoint_Test_Form_Abstract extends PHPUnit_Framework_TestCase {
 		echo "\nFORM HTML OUTPUT WITH CONTROL:-\n$html\n";
 		
 		$trackingID = $this->testObject->getTrackingID ();
-		$this->assertTrue ( '<form><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><input id="test" type="text" maxlength="255" value=""/></form>' == $this->testObject->getHtml (), 'incorrect form html' );
+		$this->assertTrue ( '<form id="' . self::TEST_FORM_ID . '" action="' . $this->testObject->getActionURL () . '"><p><input id="' . $trackingID . '" type="hidden" value="1"/></p><p id="test_container"><input id="test" type="text" maxlength="255" value=""/></p></form>' == $this->testObject->getHtml (), 'incorrect form html' );
 	}
 }
 

@@ -145,7 +145,7 @@ abstract class XeroPoint_Form_Abstract {
 	 */
 	public function getActionURL() {
 		$protocol = isset ( $_SERVER ['HTTPS'] ) && strtolower ( $_SERVER ['HTTPS'] ) == 'on' ? 'https://' : 'http://';
-		$server = $_SERVER ['SERVER_NAME'];
+		$server = isset ( $_SERVER ['SERVER_NAME'] ) ? $_SERVER ['SERVER_NAME'] : '';
 		$script = $_SERVER ['SCRIPT_NAME'];
 		$qs = $_SERVER ['QUERY_STRING'] == '' ? '' : '?' . str_replace ( '&', '&amp;', $_SERVER ['QUERY_STRING'] );
 		
