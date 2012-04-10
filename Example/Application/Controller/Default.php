@@ -13,7 +13,14 @@ class XeroPoint_Application_Controller_Default extends XeroPoint_Controller_Abst
 	 * @param XeroPoint_Document_HTML $document
 	 */
 	public function __construct(XeroPoint_Document_HTML $document) {
+		// add a local resource using the resource management mechanism
 		$document->addResource ( new XeroPoint_Application_Resource_Manager_Style_Example () );
+		
+		// add an external CSS for whatever reason
+		$document->addScript ( 'http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js' );
+		
+		// add CSS - doesn't matter that they are added after scripts, the document will always build with CSS links before scripts!
+		$document->addCSS ( 'http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css' );
 	}
 	
 	/**

@@ -133,7 +133,7 @@ class XeroPoint_Document_HTML {
 	 * @return XeroPoint_Document_HTML
 	 */
 	public function addCSS($url) {
-		$this->linkedCSS [] = $url;
+		$this->linkedCSS [$url] = $url;
 		return $this;
 	}
 	
@@ -155,7 +155,7 @@ class XeroPoint_Document_HTML {
 	 * @return XeroPoint_Document_HTML
 	 */
 	public function addScript($url) {
-		$this->linkedScripts [] = $url;
+		$this->linkedScripts [$url] = $url;
 		return $this;
 	}
 	
@@ -206,9 +206,20 @@ class XeroPoint_Document_HTML {
 	 * @return string
 	 */
 	public function getHeadHtml() {
-		// first build any resources that might be attached
+		// create html for resources
 		$resources = '';
 		
+		// now add any fixed URL CSS resources
+		foreach ( $this->linkedCSS as $cssURL ) {
+			$resources .= '<link rel="stylesheet" type="text/css" href="' . $cssURL . '"/>';
+		}
+		
+		// now add any fixed URL script resources
+		foreach ( $this->linkedScripts as $scriptURL ) {
+			$resources .= '<script type="text/javascript" src="' . $scriptURL . '"></script>';
+		}
+		
+		// attach resources
 		foreach ( $this->resources as $resource ) {
 			/* @var $resource XeroPoint_Resource_Abstract */
 			if ($resource instanceof XeroPoint_Resource_Manager_Style_Abstract) {
