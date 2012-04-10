@@ -81,5 +81,13 @@ class XeroPoint_Test_Resource_Manager_Script extends PHPUnit_Framework_TestCase 
 		// now check again
 		$this->assertTrue ( $testURL . '&amp;param=value' == $this->testObject->getURL (), 'incorrect URL and parameters: ' . $this->testObject->getURL () );
 	}
+	
+	/**
+	 * test that the script resource manager recognises external URL has been specified and returns it via getURL method
+	 * 
+	 */
+	public function testGetURLWithExternalURL() {
+		$this->testObject->setExternalURL ( 'http://externalurl/resource.js' );
+		$this->assertTrue ( 'http://externalurl/resource.js' == $this->testObject->getURL (), 'incorrect url returned when using external link' );
+	}
 }
-

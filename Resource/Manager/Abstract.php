@@ -31,6 +31,13 @@ abstract class XeroPoint_Resource_Manager_Abstract {
 	const REQUEST_TYPE = 'xpRequestType';
 	
 	/**
+	 * if this resource points to an external URL then this will hold the link
+	 * 
+	 * @var string
+	 */
+	protected $externalURL;
+	
+	/**
 	 * defines if the resource is local application or XeroPoint based
 	 * 
 	 * @var bool
@@ -130,6 +137,11 @@ abstract class XeroPoint_Resource_Manager_Abstract {
 			foreach ( $this->urlParameters as $parameter => $value ) {
 				$additionalURLParameters .= $this->separator . $parameter . '=' . $value;
 			}
+		}
+		
+		// first check if there is an external URL specified then we only append parameters to that URL and return the result
+		if ($this->externalURL) {
+			return $this->externalURL . $additionalURLParameters;
 		}
 		
 		// if running on web server...

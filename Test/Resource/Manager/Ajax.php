@@ -109,4 +109,3 @@ class XeroPoint_Test_Resource_Manager_Ajax extends PHPUnit_Framework_TestCase {
 		$this->assertTrue ( $testURL . '&param=value' == $this->testObject->getURL (), 'incorrect URL and parameters: ' . $this->testObject->getURL () );
 	}
 }
-
