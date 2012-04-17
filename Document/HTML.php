@@ -168,7 +168,7 @@ class XeroPoint_Document_HTML {
 	 * @return string
 	 */
 	protected function buildLinkTag($url, $type = 'text/css', $rel = 'stylesheet') {
-		return '<link href="' . $url . '" type="' . $type . '" rel="' . $rel . '"/>';
+		return '<link type="' . $type . '" rel="' . $rel . '" href="' . $url . '" />';
 	}
 	
 	/**
@@ -179,7 +179,7 @@ class XeroPoint_Document_HTML {
 	 * @return string
 	 */
 	protected function buildScriptTag($url, $type = 'text/javascript') {
-		return '<script href="' . $url . '" type="' . $type . '"/>';
+		return '<script type="' . $type . '" src="' . $url . '" ></script>';
 	}
 	
 	/**
@@ -211,12 +211,12 @@ class XeroPoint_Document_HTML {
 		
 		// now add any fixed URL CSS resources
 		foreach ( $this->linkedCSS as $cssURL ) {
-			$resources .= '<link rel="stylesheet" type="text/css" href="' . $cssURL . '"/>';
+			$resources .= $this->buildLinkTag ( $cssURL );
 		}
 		
 		// now add any fixed URL script resources
 		foreach ( $this->linkedScripts as $scriptURL ) {
-			$resources .= '<script type="text/javascript" src="' . $scriptURL . '"></script>';
+			$resources .= $this->buildScriptTag ( $scriptURL );
 		}
 		
 		// attach resources
