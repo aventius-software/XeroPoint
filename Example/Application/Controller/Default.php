@@ -21,6 +21,9 @@ class XeroPoint_Application_Controller_Default extends XeroPoint_Controller_Abst
 		
 		// add CSS - doesn't matter that they are added after scripts, the document will always build with CSS links before scripts!
 		$document->addCSS ( 'http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/claro/claro.css' );
+		
+		// add a XeroPoint library based resource manager (in this case the JQuery library)
+		$document->addResource ( new XeroPoint_Resource_Manager_Script_JQuery () );
 	}
 	
 	/**
