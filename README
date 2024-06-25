@@ -1,3 +1,5 @@
+NOTES - This is an old PHP framework I wrote many years ago, just forked it from my old GitHub account to here...
+
 Welcome to XeroPoint (alpha) - DO NOT USE IN PRODUCTION!
 
 I'm pretty much doing this as a technical exercise but its an experimental PHP framework based as much as possible on object orientated design ideas, its based on an existing framework that I intially developed at home for use with a new website I'm working on but which also I use with various work projects.
